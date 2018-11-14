@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { NumberInput, StringInput } from './components/input';
 
-export default class App extends Component {
-    render() {
-        return (
-            <div>This is a react App</div>
-        );
-    }
+export default function App() {
+    return (
+        <div>
+            <NumberInput value={0} onChange={(v) => { console.log(v); }} />
+            <StringInput value='' onChange={v => console.log(v)} />
+        </div>
+    );
 }

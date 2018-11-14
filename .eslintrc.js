@@ -7,7 +7,8 @@ module.exports = {
     "plugins": [
         "react",
         "import",
-        "jsx-a11y"
+        "jsx-a11y",
+        "react-hooks" //react hooks eslint
     ],
     "parser": "babel-eslint",
     "extends": [
@@ -27,6 +28,7 @@ module.exports = {
         //solve `React` gives `no-used-vars` errors
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
+        "react-hooks/rules-of-hooks": "error",
         //end 
         "indent": ['error', 4, { 'SwitchCase': 1 }],
         "accessor-pairs": 2,

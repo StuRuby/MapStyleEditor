@@ -10,7 +10,7 @@ module.exports = merge(commonWebpackConfig, {
         contentBase: path.resolve(__dirname, '../dist'),
         compress: true,
         port: 3000,
-        noInfo: true,
+        noInfo: false,
         historyApiFallback: true,
     },
     module: {
