@@ -4,7 +4,16 @@ module.exports = {
         "commonjs": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "plugins": [
+        "react",
+        "import",
+        "jsx-a11y"
+    ],
+    "parser": "babel-eslint",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+    ],
     "parserOptions": {
         "ecmaVersion": 8,
         "sourceType": "module"
@@ -15,6 +24,10 @@ module.exports = {
         "__dirname": true
     },
     "rules": {
+        //solve `React` gives `no-used-vars` errors
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        //end 
         "indent": ['error', 4, { 'SwitchCase': 1 }],
         "accessor-pairs": 2,
         // 指定数组的元素之间要以空格隔开(,后面)， never参数：[ 之前和 ] 之后不能带空格，always参数：[ 之前和 ] 之后必须带空格
@@ -69,5 +82,18 @@ module.exports = {
         "semi-spacing": [2, { "before": false, "after": true }],//分号前后空格
         "no-this-before-super": 0,//在调用super()之前不能使用this或super
         "constructor-super": 0,//非派生类不能调用super，派生类必须调用super
+    },
+    "settings": {
+        "react": {
+            "createClass": "createReactClass", // Regex for Component Factory to use,
+            // default to "createReactClass"
+            "pragma": "React",  // Pragma to use, default to "React"
+            "version": "16.6.3", // React version, default to the latest React stable release
+            // "flowVersion": "0.53" // Flow version
+        },
+        "propWrapperFunctions": ["forbidExtraProps"] // The names of any functions used to wrap the
+        // propTypes object, e.g. `forbidExtraProps`.
+        // If this isn't set, any propTypes wrapped in
+        // a function will be skipped.
     }
 };
