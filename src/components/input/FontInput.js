@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AutoCompleteInput from './AutoCompleteInput';
 
@@ -14,7 +14,7 @@ export default function FontInput(props) {
         return (
             <AutoCompleteInput
                 key={i}
-                value={value}
+                value={v}
                 options={props.fonts.map(f => [f, f])}
                 onChange={changeFont.bind(this, i)}
             />

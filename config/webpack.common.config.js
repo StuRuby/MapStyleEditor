@@ -37,8 +37,31 @@ module.exports = {
                 ]
             },
             {
+                test: /\.scss$/,
+                exclude: [
+                    path.resolve(__dirname, '../node_modules')
+                ],
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
                 test: /\.(png|gif|jpe?g|svg|xml|json|ttf|woff|eot)$/,
                 use: ['url-loader']
+            },
+            {
+                test: /\.(eot|ttf|woff|woff2)$/,
+                use: 'file-loader?name=fonts/[name].[ext]'
+            },
+            {
+                test: /\.ico$/,
+                use: 'file-loader?name=[name].[ext]'
+            },
+            {
+                test: /\.(svg|gif|jpg|png)$/,
+                use: 'file-loader?name=img/[name].[ext]'
             },
         ]
     },

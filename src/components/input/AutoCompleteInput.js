@@ -5,14 +5,14 @@ import Autocomplete from 'react-autocomplete';
 
 const MAX_HEIGHT = 140;
 
-export default function Autocomplete(props) {
+export default function AutocompleteInput(props) {
     const [maxHeight, setMaxHeight] = useState(MAX_HEIGHT);
     const autocompleteMenuEl = useRef(null);
 
     function calcMaxHeight() {
         if (props.keepMenuWithinWindowBounds) {
-            const _maxHeight = window.innerHeight - autocompleteMenuEl.getBoundingClientRect().top;
-            const limitedMaxHeight = Math.min(maxHeight, MAX_HEIGHT);
+            const _maxHeight = window.innerHeight - autocompleteMenuEl.current.getBoundingClientRect().top;
+            const limitedMaxHeight = Math.min(_maxHeight, MAX_HEIGHT);
             if (limitedMaxHeight !== maxHeight) {
                 setMaxHeight(limitedMaxHeight);
             }
@@ -37,7 +37,7 @@ export default function Autocomplete(props) {
         className: 'maputnik-string',
         spellCheck: false
     };
-    const shouleItemRender = ((item, value = ''))=> {
+    const shouleItemRender = (item, value = '') => {
         if (typeof value === 'string') {
             return item[0].toLowerCase().indexOf(value.toLowerCase()) > -1;
         }
@@ -46,8 +46,8 @@ export default function Autocomplete(props) {
         <div
             key={item[0]}
             className={classNames({
-                "maputnik-autocomplete-menu-item": true,
-                "maputnik-autocomplete-menu-item-selected": isHighlighted,
+                'maputnik-autocomplete-menu-item': true,
+                'maputnik-autocomplete-menu-item-selected': isHighlighted,
             })} >
             {item[1]}
         </div>
@@ -59,7 +59,7 @@ export default function Autocomplete(props) {
                 wrapperProps={wrapperProps}
                 inputProps={inputProps}
                 value={props.value}
-                items={props.items}
+                items={props.options}
                 getItemValue={item => item[0]}
                 onSelect={v => props.onChange(v)}
                 shouleItemRender={shouleItemRender}
@@ -67,16 +67,16 @@ export default function Autocomplete(props) {
             />
         </div>
     );
-};
+}
 
-Autocomplete.propTypes = {
+AutocompleteInput.propTypes = {
     value: PropTypes.string,
     options: PropTypes.array,
     onChange: PropTypes.func,
-    keepMenuWithinWindowBounds: PropTypes.bool
+    keepMenuWithinWindowBounds: PropTypes.bool,
 };
 
-Autocomplete.defaultProps = {
-    onChange=() => { },
+AutocompleteInput.defaultProps = {
+    onChange: () => { },
     options: []
 };

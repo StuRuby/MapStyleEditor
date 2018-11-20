@@ -1,0 +1,135 @@
+// ZOOM FUNC
+.maputnik-make-zoom-function {
+  background-color: transparent;
+  display: inline-block;
+  padding-bottom: 0;
+  padding-top: 0;
+  vertical-align: middle;
+
+  @extend .maputnik-icon-button;
+}
+
+// ZOOM PROPERTY
+.maputnik-zoom-spec-property {
+  @extend .clearfix;
+}
+
+.maputnik-zoom-spec-property-label {
+  display: inline-block;
+  width: 41%;
+}
+
+.maputnik-zoom-spec-property-stop-item {
+  margin-bottom: $margin-2;
+  margin-top: $margin-2;
+}
+
+.maputnik-zoom-spec-property-stop-edit {
+  display: inline-block;
+  vertical-align: top;
+  width: 16%;
+  margin-right: 3%;
+
+  > * {
+    width: 100%;
+  }
+}
+
+.maputnik-zoom-spec-property-stop-value {
+  display: inline-block;
+  width: 81%;
+
+  > * {
+    width: 100%;
+  }
+}
+
+.maputnik-delete-stop {
+  @extend .maputnik-icon-button;
+
+  vertical-align: top;
+
+  .maputnik-doc-wrapper {
+    width: auto;
+  }
+
+  .maputnik-doc-target {
+    cursor: pointer;
+  }
+}
+
+.maputnik-add-stop {
+  display: inline-block;
+  float: right;
+  margin-right: $margin-3;
+}
+
+// DATA FUNC
+.maputnik-make-data-function {
+  background-color: transparent;
+  display: inline-block;
+  padding-bottom: 0;
+  padding-top: 0;
+  vertical-align: middle;
+
+  @extend .maputnik-icon-button;
+}
+
+.maputnik-data-spec-property {
+  .maputnik-input-block-label {
+    width: 30%;
+  }
+
+  .maputnik-input-block:not(:first-child) .maputnik-input-block-label {
+    visibility: hidden;
+  }
+
+  .maputnik-input-block-content {
+    width: 70%;
+  }
+
+  .maputnik-data-spec-property-group {
+    margin-bottom: 3%;
+
+    .maputnik-doc-wrapper {
+      width: 25%;
+      color: $color-lowgray;
+    }
+
+    .maputnik-doc-wrapper:hover {
+      color: inherit;
+    }
+
+    .maputnik-data-spec-property-input {
+      width: 75%;
+      display: inline-block;
+
+      .maputnik-string {
+        margin-bottom: 3%;
+      }
+    }
+  }
+}
+
+.maputnik-data-spec-block {
+  overflow: auto;
+
+  .maputnik-data-spec-property-stop-edit,
+  .maputnik-data-spec-property-stop-data {
+    display: inline-block;
+    margin-bottom: 3%;
+  }
+
+  .maputnik-data-spec-property-stop-edit {
+    width: 18%;
+    margin-right: 3%;
+  }
+
+  .maputnik-data-spec-property-stop-data {
+    width: 100%;
+  }
+
+  .maputnik-data-spec-property-stop-edit + .maputnik-data-spec-property-stop-data {
+    width: 78%;
+  }
+}

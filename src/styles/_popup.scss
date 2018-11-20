@@ -1,0 +1,25 @@
+.maputnik-popup-layer {
+  display: block;
+  color: $color-lowgray;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.2;
+  padding: $margin-2;
+  padding-top: $margin-1;
+  padding-bottom: $margin-1;
+}
+
+.maputnik-popup-layer-id {
+  padding-left: $margin-2;
+  padding-right: $margin-2;
+  background-color: $color-midgray;
+  color: $color-white;
+}
+
+.maputnik-feature-property-popup {
+  .maputnik-input-block {
+    margin: 0;
+    margin-left: $margin-2;
+    margin-top: $margin-2;
+  }
+}

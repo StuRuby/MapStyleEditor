@@ -22,6 +22,7 @@
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
@@ -35,9 +36,12 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-react-hooks": "0.0.0",
+    "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.10.0",
     "progress-bar-webpack-plugin": "^1.11.0",
     "react-hot-loader": "^4.3.12",
+    "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.25.1",
@@ -46,6 +50,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "@babel/runtime": "^7.1.5",
     "@rematch/core": "^1.0.6",
     "immutable": "^4.0.0-rc.12",
     "mapbox-gl": "^0.51.0",
@@ -54,6 +59,7 @@
     "react": "^16.7.0-alpha.2",
     "react-autobind": "^1.0.6",
     "react-autocomplete": "^1.8.1",
-    "react-dom": "^16.7.0-alpha.2"
+    "react-dom": "^16.7.0-alpha.2",
+    "react-icons": "^3.2.2"
   }
 }

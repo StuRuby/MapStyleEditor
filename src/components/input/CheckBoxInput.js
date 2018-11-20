@@ -9,7 +9,7 @@ export default function CheckBoxInput(props) {
                 className='maputnik-checkbox'
                 type='checkbox'
                 style={props.style}
-                onChange={e => props.onChange(!props.value)}
+                onChange={() => props.onChange(!props.value)}
                 checked={props.value}
             />
             <div className='maputnik-checkbox-box'>

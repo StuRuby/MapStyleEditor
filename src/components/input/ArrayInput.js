@@ -7,9 +7,9 @@ export default function ArrayInput(props) {
     const values = props.value || props.default || [];
 
     function changeValue(idx, newValue) {
-        const values = values.slice(0);
-        values[idx] = newValue;
-        props.onChange(values);
+        const _values = values.slice(0);
+        _values[idx] = newValue;
+        props.onChange(_values);
     }
 
     const inputs = values.map((v, i) => {
@@ -30,10 +30,10 @@ export default function ArrayInput(props) {
                 />
             );
         }
-    })
+    });
     return (
         <div className='maputnik-array'>{inputs}</div>
-    )
+    );
 }
 
 ArrayInput.propTypes = {

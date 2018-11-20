@@ -59,7 +59,7 @@ module.exports = {
         "no-dupe-keys": 2,//在创建对象字面量时不允许键重复 {a:1,a:1}
         "no-dupe-args": 2,//函数参数不能重复
         "no-empty": 2,//块语句中的内容不能为空
-        "no-extra-parens": 2,//禁止非必要的括号
+        // "no-extra-parens": 1,//禁止非必要的括号
         "no-extra-semi": 2,//禁止多余的冒号
         "no-implied-eval": 2,//禁止使用隐式eval
         "no-with": 2,//禁用with
