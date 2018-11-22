@@ -5,6 +5,7 @@ import CollapseWrapper from 'react-collapse';
 
 
 export default function Collapse(props) {
+    //利用特性检测对一些配置较差的设备主动开启`减弱动态效果`
     return accessibility.reducedMotionEnabled()
         ? <div style={{ display: props.isActive ? 'block' : 'none' }} >
             {props.children}
