@@ -62,6 +62,7 @@
     "react-autobind": "^1.0.6",
     "react-autocomplete": "^1.8.1",
     "react-dom": "^16.7.0-alpha.2",
+    "react-icon-base": "^2.1.2",
     "react-icons": "^3.2.2",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1"
