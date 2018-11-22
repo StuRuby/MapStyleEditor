@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
+    "@mapbox/mapbox-gl-style-spec": "^13.4.0",
     "@rematch/core": "^1.0.6",
     "immutable": "^4.0.0-rc.12",
     "mapbox-gl": "^0.51.0",
