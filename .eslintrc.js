@@ -12,7 +12,7 @@ module.exports = {
     ],
     "parser": "babel-eslint",
     "extends": [
-        "eslint:recommended",
+        // "eslint:recommended",
         "plugin:react/recommended",
     ],
     "parserOptions": {

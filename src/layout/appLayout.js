@@ -21,8 +21,8 @@ export default function AppLayout(props) {
                 props.bottom && <div className='maputnik-layout-bottom' >
                     {props.bottom}
                 </div>
-            }
-            {props.modals} */}
+            } */}
+            {props.modals}
         </div>
     );
 }

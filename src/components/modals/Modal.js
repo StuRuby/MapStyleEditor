@@ -11,7 +11,7 @@ export default function Modal(props) {
         if (document.activeElement) {
             document.activeElement.blur();
         }
-        setImmediate(() => props.onOpenToggle(false))
+        setImmediate(() => props.onOpenToggle(false));
     }
     return (
         props.isOpen && <AriaModal
