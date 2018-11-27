@@ -43,6 +43,17 @@ function ensureStyleValidity(style) {
     return _ensureHasNoInteractive(_ensureHasNoRefs(_ensureHasId(style)));
 }
 
+function indexOfLayer(layers, layerId) {
+    for (let i = 0; i < layers.length; i++) {
+        if (layers[i].id === layerId) {
+            return i;
+        }
+    }
+    return null;
+}
+
+
+
 export default {
     ensureStyleValidity,
     emptyStyle,

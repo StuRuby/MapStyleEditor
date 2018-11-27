@@ -69,6 +69,7 @@
     "react-autocomplete": "^1.8.1",
     "react-collapse": "^4.0.3",
     "react-dom": "^16.7.0-alpha.2",
+    "react-file-reader-input": "^2.0.0",
     "react-icon-base": "^2.1.2",
     "react-icons": "^3.2.2",
     "react-redux": "^5.1.1",

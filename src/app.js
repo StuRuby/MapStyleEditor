@@ -7,13 +7,13 @@ function App() {
     const toolbar = <ToolsBar />;
     const modals = (
         <div>
-            <ShortcutsModal />
-            <AddModal />
-            <ExportModal />
-            <LoadingModal />
+            {/* <ShortcutsModal /> */}
+            {/* <AddModal /> */}
+            {/* <ExportModal />
+            <LoadingModal /> */}
             <OpenModal />
-            <SettingModal />
-            <SourcesModal />
+            {/* <SettingModal />
+            <SourcesModal /> */}
         </div>
     );
     return (
