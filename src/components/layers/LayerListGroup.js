@@ -5,7 +5,7 @@ import Collapser from './Collapser';
 export default function LayerListGroup(props) {
 
     function onClickHandler(e) {
-        return props.onActiveToggle(!props.isActive)
+        return props.onActiveToggle(!props.isActive);
     }
 
     return (
@@ -29,6 +29,8 @@ export default function LayerListGroup(props) {
 LayerListGroup.propTypes = {
     title: PropTypes.string.isRequired,
     'data-wd-key': PropTypes.string,
-    isActive: PropTypes.bool.isRequired,
-    onActiveToggle: PropTypes.func.isRequired
+    // isActive: PropTypes.bool.isRequired,
+    // onActiveToggle: PropTypes.func.isRequired
+    isActive: PropTypes.bool,
+    onActiveToggle: PropTypes.func
 };

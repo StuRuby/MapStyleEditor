@@ -27,3 +27,7 @@ LayerIcon.propTypes = {
     type: PropTypes.string.isRequired,
     style: PropTypes.object
 };
+
+LayerIcon.defaultProps = {
+    type: 'fill-extrusion'
+};

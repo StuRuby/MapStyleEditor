@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import ScrollContainer from '../components/ScrollContainer';
+import ScrollContainer from '../components/ScrollContainer';
 
 export default function AppLayout(props) {
     return (
         <div className='maputnik-layout'>
             {props.toolbar}
-            {/* <div className='maputnik-layout-list'>
+            <div className='maputnik-layout-list'>
                 <ScrollContainer>
                     {props.layerList}
                 </ScrollContainer>
             </div>
-            <div className='maputnik-layout-drawer'>
+            {/* <div className='maputnik-layout-drawer'>
                 <ScrollContainer>
                     {props.layerEditor}
                 </ScrollContainer>
