@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import autobind from 'react-autobind';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { SortableContainer } from 'react-sortable-hoc';
 import LayerListGroup from '../../components/layers/LayerListGroup';
 import { connect } from 'react-redux';
 import LayerListItem from '../../components/layers/LayerListItem';
+import AddModal from '../modals/AddModal';
 
 class LayerListContainer extends Component {
     constructor(props) {
@@ -13,7 +14,8 @@ class LayerListContainer extends Component {
         autobind(this);
         this.state = {
             collapsedGroups: {},
-            areAllGroupsExpanded: false
+            areAllGroupsExpanded: false,
+            addIsOpen: false
         };
     }
 
@@ -50,6 +52,12 @@ class LayerListContainer extends Component {
         }
         this.setState({
             collapsedGroups: newGroups
+        });
+    }
+
+    toggleModal() {
+        this.setState({
+            addIsOpen: !this.state.addIsOpen
         });
     }
 
@@ -100,10 +108,14 @@ class LayerListContainer extends Component {
                     className={className}
                     index={idx}
                     layerId={layer.id}
+                    layers={props.layers}
                     layerType={layer.type}
                     visibility={(layer.layout || {}).visibility}
                     isSelected={idx === props.selectedLayerIndex}
-
+                    onLayerSelect={props.onLayerSelect}
+                    onLayerDestroy={props.onLayerDestroy}
+                    onLayerCopy={props.onLayerCopy}
+                    onLayerVisibilityToggle={props.onLayerVisibilityToggle}
                 />;
 
                 listItems.push(listItem);
@@ -118,6 +130,13 @@ class LayerListContainer extends Component {
         const listItems = this.setListItems();
         return (
             <div className='maputnik-layer-list'>
+                <AddModal
+                    layers={this.props.layers}
+                    sources={this.props.sources}
+                    isOpen={this.state.addIsOpen}
+                    onOpenToggle={this.toggleModal}
+                    onLayerAdded={this.props.onLayerAdded}
+                />
                 <header className='maputnik-layer-list-header'>
                     <span className='maputnik-layer-list-header-title'>Layers</span>
                     <span className='maputnik-space' />
@@ -133,6 +152,7 @@ class LayerListContainer extends Component {
                     <div className='maputnik-default-property'>
                         <div className='maputnik-multibutton'>
                             <button
+                                onClick={this.toggleModal}
                                 data-wd-key='layer-list:add-layer'
                                 className='maputnik-button maputnik-button-selected'>
                                 添加图层
@@ -149,11 +169,13 @@ class LayerListContainer extends Component {
 }
 
 LayerListContainer.propTypes = {
-    layers: PropTypes.array
+    layers: PropTypes.array,
+    selectedLayerIndex: PropTypes.number,
+    sources: PropTypes.object,
+    onLayerAdded: PropTypes.func
 };
 
 const LayerListContainerSortable = SortableContainer(props => <LayerListContainer {...props} />);
-
 
 
 const mapState = ({ mapStyle, selectedLayerIndex, sources }) => ({
@@ -162,8 +184,14 @@ const mapState = ({ mapStyle, selectedLayerIndex, sources }) => ({
     sources,
 });
 
-const mapDispatch = () => ({
-
+const mapDispatch = ({
+    selectedLayerIndex: { setLayerSelect },
+    mapStyle: { destoryLayer, copyLayer, toggleLayerVisibility }
+}) => ({
+    onLayerSelect: (layers, idx) => setLayerSelect(layers, idx),
+    onLayerDestroy: (layerId) => destoryLayer(layerId),
+    onLayerCopy: (layerId) => copyLayer(layerId),
+    onLayerVisibilityToggle: (layerId) => toggleLayerVisibility(layerId)
 });
 
 export default connect(mapState, mapDispatch)(LayerListContainerSortable);

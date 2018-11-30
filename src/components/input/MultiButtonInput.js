@@ -9,13 +9,15 @@ export default function MultiButtonInput(props) {
         _options = _options.map(v => [v, v]);
     }
     const selectedValue = props.value || options[0][0];
-    const buttons = _options.map([val, label]=> <Button
-        key={val}
-        onClick={() => props.onChange(val)}
-        className={classNames({ 'maputnik-button-selected': val === selectedValue })}
-    >
-        {label}
-    </Button>);
+    const buttons = _options.map(([val, label]) =>
+        <Button
+            key={val}
+            onClick={() => props.onChange(val)}
+            className={classNames({ 'maputnik-button-selected': val === selectedValue })}
+        >
+            {label}
+        </Button>
+    );
 
     return (
         <div className='maputnik-multibutton'>

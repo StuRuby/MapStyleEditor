@@ -57,4 +57,5 @@ function indexOfLayer(layers, layerId) {
 export default {
     ensureStyleValidity,
     emptyStyle,
+    indexOfLayer,
 };

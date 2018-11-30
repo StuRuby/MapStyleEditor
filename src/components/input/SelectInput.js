@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function SelectInput(props) {
     let _options = props.options;
-    if (_options.length > 0 && !Array.isArray(options[0])) {
+    if (_options.length > 0 && !Array.isArray(_options[0])) {
         _options = _options.map(v => [v, v]);
     }
     return (

@@ -20,7 +20,7 @@ export default function LayerSourceLayerBlock(props) {
     );
 }
 
-LayerSourceLayerBlock.PropTypes = {
+LayerSourceLayerBlock.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     sourceLayerIds: PropTypes.array,

@@ -1,3 +1,14 @@
+import style from '../libs/style';
+
 export default {
-    state: 0
+    state: 0,
+    reducers: {
+        setLayerSelect(state, layers, idx) {
+            const _idx = style.indexOfLayer(layers, idx);
+            return _idx;
+            // const layers = state.layers;
+            // const idx = style.indexOfLayer(layers, payload);
+
+        }
+    }
 };

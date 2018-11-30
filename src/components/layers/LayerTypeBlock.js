@@ -35,3 +35,8 @@ LayerTypeBlock.propTypes = {
     wdKey: PropTypes.string,
     onChange: PropTypes.func.isRequired
 };
+
+LayerTypeBlock.defaultProps = {
+    value: '',
+    onChange: () => { }
+};

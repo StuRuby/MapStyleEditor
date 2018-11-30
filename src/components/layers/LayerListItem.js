@@ -20,11 +20,11 @@ const DraggableLabel = SortableHandle(props => {
 
 function LayerListItem(props) {
     const visibilityAction = props.visibility === 'visible' ? 'show' : 'hide';
-
+    const onClickHandler = () => props.onLayerSelect(props.layers, props.layerId);
     return (
         <li
             key={props.layerId}
-            onClick={e => props.onLayerSelect(props.layerId)}
+            onClick={onClickHandler}
             data-wd-key={'layer-list-item:' + props.layerId}
             className={classnames({
                 'maputnik-layer-list-item': true,
@@ -62,12 +62,13 @@ LayerListItem.propTypes = {
     isSelected: PropTypes.bool,
     visibility: PropTypes.string,
     className: PropTypes.string,
-
+    layers: PropTypes.array,
     onLayerSelect: PropTypes.func.isRequired,
     onLayerCopy: PropTypes.func,
     onLayerDestroy: PropTypes.func,
     onLayerVisibilityToggle: PropTypes.func,
 };
+
 
 
 export default SortableElement(props => <LayerListItem {...props} />);
