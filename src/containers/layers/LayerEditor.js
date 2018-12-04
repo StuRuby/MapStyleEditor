@@ -1,9 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import clamp from 'lodash.clamp';
 import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
 import { MdMoreVert } from 'react-icons/md';
 import { connect } from 'react-redux';
+import { arrayMove } from 'react-sortable-hoc';
 
+
+function layoutGroups(layerType) {
+    const layerGroup = {
+        title: 'Layer',
+        type: 'layer'
+    };
+    const filterGroup = {
+        title: 'Filter',
+        type: 'filter'
+    };
+    const editorGroup = {
+        title: 'JSON Editor',
+        type: 'jsoneditor'
+    };
+}
 
 class LayerEditor extends Component {
     constructor(props) {
@@ -29,8 +46,22 @@ class LayerEditor extends Component {
         return layers.length > 0 ? layers[selectedLayerIndex] : null;
     }
 
-    moveLayer() {
+    moveLayer(offset) {
+        const props = this.props;
+        let oldIndex = props.selectedLayerIndex;
+        let newIndex = props.selectedLayerIndex + offset;
+        const layers = props.layers;
+        oldIndex = clamp(oldIndex, 0, layers.length - 1);
+        newIndex = clamp(newIndex, 0, layers.length - 1);
 
+        if (oldIndex === newIndex) return;
+        if (oldIndex === props.selectedLayerIndex) {
+            props.setSelectedLayerIndex(newIndex);
+        }
+
+        let _layers = layers.slice();
+        _layers = arrayMove(_layers, oldIndex, newIndex);
+        props.onLayerChanged(_layers);
     }
 
     render() {
@@ -54,9 +85,19 @@ class LayerEditor extends Component {
             moveLayerUp: {
                 text: '向上移动图层',
                 disabled: props.selectedLayerIndex < 1,
-                // handler: ()=>
+                handler: () => this.moveLayer(-1)
+            },
+            moveLayerDown: {
+                text: '向下移动图层',
+                disabled: props.selectedLayerIndex === props.layers.length - 1,
+                handler: () => this.moveLayer(+1)
             }
         };
+
+        function handleSection(id, evt) {
+            evt.stopPropagation();
+            items[id].handler();
+        }
         return (
             <div className='maputnik-layer-editor'>
                 <header>
@@ -67,7 +108,7 @@ class LayerEditor extends Component {
                         <div className='layer-header__info'>
                             <Wrapper
                                 className='more-menu'
-                                onSelection={() => { }}
+                                onSelection={handleSection}
                                 closeOnSelection={false}
                             >
                                 <Button className='more-menu__button' >
@@ -75,7 +116,7 @@ class LayerEditor extends Component {
                                 </Button>
                                 <Menu>
                                     <ul className='more-menu__menu' >
-                                        {/* {this.renderMenuItemsList()} */}
+                                        {this.renderMenuItemsList(items)}
                                     </ul>
                                 </Menu>
                             </Wrapper>
@@ -99,14 +140,15 @@ const mapState = ({ mapStyle, selectedLayerIndex }) => ({
 
 
 const mapDispatch = ({
-    selectedLayerIndex: { setLayerSelect },
-    mapStyle: { destoryLayer, copyLayer, toggleLayerVisibility }
+    selectedLayerIndex: { setLayerSelect, setSelectedLayerIndex },
+    mapStyle: { destoryLayer, copyLayer, toggleLayerVisibility, changeLayer }
 }) => ({
     onLayerSelect: (layers, idx) => setLayerSelect(layers, idx),
     onLayerDestroy: (layerId) => destoryLayer(layerId),
     onLayerCopy: (layerId) => copyLayer(layerId),
     onLayerVisibilityToggle: (layerId) => toggleLayerVisibility(layerId),
-    onLayerAdded: (layers) => changeLayer(layers),
+    onLayerChanged: (layers) => changeLayer(layers),
+    setSelectedLayerIndex: (index) => setSelectedLayerIndex(index),
 });
 
 export default connect(mapState, mapDispatch)(LayerEditor);
