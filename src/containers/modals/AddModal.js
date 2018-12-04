@@ -49,12 +49,29 @@ export default class AddModal extends Component {
         return sources;
     }
 
+    addLayer() {
+        const props = this.props;
+        const changedLayers = props.layers.slice();
+        const { id, type, source } = this.state;
+        const layer = { id, type };
+        if (type !== 'background') {
+            layer.source = source;
+            if (type !== 'raster' && this.state['source-layer']) {
+                layer['source-layer'] = this.state['source-layer'];
+            }
+        }
+        changedLayers.push(layer);
+
+        props.onLayerAdded(changedLayers);
+        props.onOpenToggle(false);
+    }
+
     render() {
         const props = this.props;
         const { type, id, source } = this.state;
         const sources = this.getSources(type);
         const layers = this.getLayersForSource(source);
-
+        console.log('id', id);
         return (
             <Modal
                 isOpen={props.isOpen}
@@ -66,11 +83,12 @@ export default class AddModal extends Component {
                     <LayerIdBlock
                         value={id}
                         wdKey='add-layer.layer-id'
-
+                        onChange={v => this.setState({ id: v })}
                     />
                     <LayerTypeBlock
                         value={type}
                         wdKey='add-layer.layer-type'
+                        onChange={v => this.setState({ type: v })}
                     />
                     {
                         type !== 'background' &&
@@ -78,6 +96,7 @@ export default class AddModal extends Component {
                             sourceIds={sources}
                             wdKey='add-layer.layer-source-block'
                             value={source}
+                            onChange={v => this.setState({ source: v })}
                         />
                     }
                     {
@@ -86,11 +105,16 @@ export default class AddModal extends Component {
                             isFixed={true}
                             sourceLayerIds={layers}
                             value={this.state['source-layer']}
+                            onChange={v => {
+                                debugger;
+                                this.setState({ 'source-layer': v });
+                            }}
                         />
                     }
                     <Button
                         className='maputnik-add-layer-button'
                         data-wd-key='add-layer'
+                        onClick={this.addLayer}
                     >
                         添加图层
                     </Button>

@@ -2,11 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import autobind from 'react-autobind';
-import { SortableContainer } from 'react-sortable-hoc';
+import { SortableContainer, arrayMove } from 'react-sortable-hoc';
 import LayerListGroup from '../../components/layers/LayerListGroup';
 import { connect } from 'react-redux';
 import LayerListItem from '../../components/layers/LayerListItem';
 import AddModal from '../modals/AddModal';
+import clamp from 'lodash.clamp';
+
+
+
+const propTypes = {
+    layers: PropTypes.array,
+    selectedLayerIndex: PropTypes.number,
+    sources: PropTypes.object,
+    onLayerChanged: PropTypes.func,
+    onLayerMove: PropTypes.func
+};
 
 class LayerListContainer extends Component {
     constructor(props) {
@@ -40,6 +51,25 @@ class LayerListContainer extends Component {
     isCollapsed(groupPrefix, idx) {
         const collapsed = this.state.collapsedGroups[[groupPrefix, idx].join('-')];
         return collapsed === undefined ? true : collapsed;
+    }
+
+    toggleAllLayers() {
+        let idx = 0;
+        let newGroups = [];
+        this.groupLayers().forEach(layers => {
+            const groupPrefix = this.layerPrefix(layers[0].id);
+            const lookupKey = [groupPrefix, idx].join('-');
+            if (layers.length > 1) {
+                newGroups[lookupKey] = this.state.areAllGroupsExpanded;
+            }
+
+            layers.forEach(layer => idx += 1);
+        });
+
+        this.setState({
+            collapsedGroups: newGroups,
+            areAllGroupsExpanded: !this.state.areAllGroupsExpanded
+        });
     }
 
     toggleLayerGroup(groupPrefix, idx) {
@@ -135,7 +165,7 @@ class LayerListContainer extends Component {
                     sources={this.props.sources}
                     isOpen={this.state.addIsOpen}
                     onOpenToggle={this.toggleModal}
-                    onLayerAdded={this.props.onLayerAdded}
+                    onLayerAdded={this.props.onLayerChanged}
                 />
                 <header className='maputnik-layer-list-header'>
                     <span className='maputnik-layer-list-header-title'>Layers</span>
@@ -144,7 +174,9 @@ class LayerListContainer extends Component {
                         <div className='maputnik-multibutton'>
                             <button
                                 id='skip-menu'
-                                className='maputnik-button'>
+                                className='maputnik-button'
+                                onClick={this.toggleAllLayers}
+                            >
                                 {areAllGroupsExpanded === true ? '关闭' : '展开'}
                             </button>
                         </div>
@@ -168,15 +200,39 @@ class LayerListContainer extends Component {
     }
 }
 
-LayerListContainer.propTypes = {
-    layers: PropTypes.array,
-    selectedLayerIndex: PropTypes.number,
-    sources: PropTypes.object,
-    onLayerAdded: PropTypes.func
+LayerListContainer.propTypes = propTypes;
+
+const LayerListContainerSortable = SortableContainer(props =>
+    <LayerListContainer
+        {...props}
+    />
+);
+
+
+const onLayerMove = (move, props) => {
+    let { oldIndex, newIndex } = move;
+    const layers = props.layers;
+    oldIndex = clamp(oldIndex, 0, layers.length - 1);
+    newIndex = clamp(newIndex, 0, layers.length - 1);
+
+    if (oldIndex === newIndex) return;
+    if (oldIndex === props.selectedLayerIndex) {
+        props.setSelectedLayerIndex(newIndex);
+    }
+
+    let _layers = layers.slice();
+    _layers = arrayMove(_layers, oldIndex, newIndex);
+    props.onLayerChanged(_layers);
 };
 
-const LayerListContainerSortable = SortableContainer(props => <LayerListContainer {...props} />);
+const sortableList = (props) => <LayerListContainerSortable
+    {...props}
+    helperClass='sortableHelper'
+    onSortEnd={(move) => onLayerMove(move, props)}
+    useDragHandle={true}
+/>;
 
+sortableList.propTypes = propTypes;
 
 const mapState = ({ mapStyle, selectedLayerIndex, sources }) => ({
     layers: mapStyle.layers,
@@ -185,13 +241,15 @@ const mapState = ({ mapStyle, selectedLayerIndex, sources }) => ({
 });
 
 const mapDispatch = ({
-    selectedLayerIndex: { setLayerSelect },
-    mapStyle: { destoryLayer, copyLayer, toggleLayerVisibility }
+    selectedLayerIndex: { setLayerSelect, setSelectedLayerIndex },
+    mapStyle: { destoryLayer, copyLayer, toggleLayerVisibility, changeLayer }
 }) => ({
     onLayerSelect: (layers, idx) => setLayerSelect(layers, idx),
     onLayerDestroy: (layerId) => destoryLayer(layerId),
     onLayerCopy: (layerId) => copyLayer(layerId),
-    onLayerVisibilityToggle: (layerId) => toggleLayerVisibility(layerId)
+    onLayerVisibilityToggle: (layerId) => toggleLayerVisibility(layerId),
+    onLayerChanged: (layers) => changeLayer(layers),
+    setSelectedLayerIndex: (index) => setSelectedLayerIndex(index),
 });
 
-export default connect(mapState, mapDispatch)(LayerListContainerSortable);
+export default connect(mapState, mapDispatch)(sortableList);

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 export default function StringInput(props) {
-    const [value, setValue] = useState(props.value || '');
-
     let tag;
     let classNames;
     if (props.multi) {
@@ -13,18 +11,9 @@ export default function StringInput(props) {
         tag = 'input';
         classNames = ['maputnik-string'];
     }
-
-    useEffect(() => {
-        if (props.value !== value) {
-            setValue(props.value);
-        }
-    });
-
-    function handleBlurChange() {
-        if (value !== props.value) {
-            props.onChange(value);
-            setValue(value);
-        }
+    function handleOnchange(e) {
+        const _value = e.target.value;
+        props.onChange(_value);
     }
 
     return React.createElement(tag, {
@@ -32,10 +21,10 @@ export default function StringInput(props) {
         spellCheck: tag !== 'input',
         className: classNames.join(' '),
         style: props.style,
-        value: value,
+        value: props.value,
         placeholder: props.default,
-        onChange: e => setValue(e.target.value),
-        onBlur: handleBlurChange
+        onChange: handleOnchange,
+        onBlur: handleOnchange
     });
 }
 

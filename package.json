@@ -64,6 +64,7 @@
     "maputnik-design": "^0.1.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0-alpha.2",
+    "react-aria-menubutton": "^6.1.0",
     "react-aria-modal": "^3.0.1",
     "react-autobind": "^1.0.6",
     "react-autocomplete": "^1.8.1",

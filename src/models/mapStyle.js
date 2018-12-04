@@ -1686,8 +1686,11 @@ const styleJson = {
 export default {
     state: styleJson,
     reducers: {
-        setMapStyle(state, payload) {
-            return payload;
+        changeLayer(state, changedLayers) {
+            return {
+                ...state,
+                layers: changedLayers
+            };
         },
         destoryLayer(state, layerId) {
             const { layers } = state;
@@ -1727,9 +1730,14 @@ export default {
                 layers: changedLayers
             };
         },
-        addLayer() {
-
-        }
-
+        // moveLayer(state, move) {
+        //     let { oldIndex, newIndex } = move;
+        //     const { layers } = state;
+        //     oldIndex = clamp(oldIndex, 0, layers.length - 1);
+        //     newIndex = clamp(newIndex, 0, layers.length - 1);
+        //     if (oldIndex === newIndex) return state;
+        //     console.log(this);
+        //     return state;
+        // },
     }
 };

@@ -6,9 +6,9 @@ export default {
         setLayerSelect(state, layers, idx) {
             const _idx = style.indexOfLayer(layers, idx);
             return _idx;
-            // const layers = state.layers;
-            // const idx = style.indexOfLayer(layers, payload);
-
+        },
+        setSelectedLayerIndex(state, index) {
+            return index;
         }
     }
 };

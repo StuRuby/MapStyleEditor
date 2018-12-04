@@ -11,12 +11,12 @@ export default function AppLayout(props) {
                     {props.layerList}
                 </ScrollContainer>
             </div>
-            {/* <div className='maputnik-layout-drawer'>
+            <div className='maputnik-layout-drawer'>
                 <ScrollContainer>
                     {props.layerEditor}
                 </ScrollContainer>
             </div>
-            {props.map}
+            {/* {props.map}
             {
                 props.bottom && <div className='maputnik-layout-bottom' >
                     {props.bottom}
