@@ -16,6 +16,7 @@ import MaxZoomBlock from '../../components/layers/MaxZoomBlock';
 import CommentBlock from '../../components/layers/CommentBlock';
 
 
+
 function layoutGroups(layerType) {
     const layerGroup = {
         title: 'Layer',
@@ -45,7 +46,6 @@ class LayerEditor extends Component {
         this.state = {
             editorGroups
         };
-        console.log('editorGroup', this.state);
     }
 
     renderMenuItemsList(items) {
@@ -100,32 +100,42 @@ class LayerEditor extends Component {
         const blockEditors = {
             'layer': <div>
                 <LayerIdBlock
-
+                    value={selectedLayer.id}
+                    wdKey='layer-editor.layer-id'
+                    onChange={() => { }}
                 />
                 <LayerTypeBlock
-
+                    value={selectedLayer.type}
+                    onChange={() => { }}
                 />
                 {
                     selectedLayer.type !== 'background' &&
                     <LayerSourceBlock
-
+                        sourceIds={Object.keys(this.props.sources)}
+                        value={selectedLayer['source']}
                     />
                 }
                 {
                     ['background', 'raster', 'hillshade', 'heatmap'].indexOf(selectedLayer.type) < 0 &&
                     <LayerSourceLayerBlock
-
+                        sourceLayerIds={sourceLayerIds}
+                        value={selectedLayer['source-layer']}
                     />
                 }
                 <MinZoomBlock
-
+                    value={selectedLayer.minzoom}
                 />
                 <MaxZoomBlock
-
+                    value={selectedLayer.maxzoom}
                 />
                 <CommentBlock
-
+                    value={comment}
                 />
+            </div>,
+            'filter': <div>
+                <div className='maputnik-filter-editor-wrapper'>
+
+                </div>
             </div>
         };
     }
