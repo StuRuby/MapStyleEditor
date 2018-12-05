@@ -10,18 +10,18 @@ export default function LayerEditorGroup(props) {
     return (
         <div>
             <div className='maputnik-layer-editor-group'
-                data-wd-key={"layer-editor-group:" + this.props['data-wd-key']}
+                data-wd-key={'layer-editor-group:' + this.props['data-wd-key']}
                 onClick={onClickHandler}
             >
                 <span>{props.title}</span>
-                <span style={flexGrow: 1} ></span>
-            <Collapser isCollapsed={props.isActive} />
-        </div>
-        <Collapse isActive={props.isActive} >
-            <div className='react-collapse-container'>
-                {props.children}
+                <span style={{ flexGrow: 1 }} ></span>
+                <Collapser isCollapsed={props.isActive} />
             </div>
-        </Collapse>
+            <Collapse isActive={props.isActive} >
+                <div className='react-collapse-container'>
+                    {props.children}
+                </div>
+            </Collapse>
         </div >
     );
 }

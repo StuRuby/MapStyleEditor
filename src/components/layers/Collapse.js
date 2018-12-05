@@ -12,7 +12,7 @@ export default function Collapse(props) {
         </div>
         : <CollapseWrapper isOpen={props.isActive} >
             {props.children}
-        </CollapseWrapper>
+        </CollapseWrapper>;
 }
 
 Collapse.propTypes = {

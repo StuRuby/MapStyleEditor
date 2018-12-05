@@ -5,6 +5,8 @@ import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
 import { MdMoreVert } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { arrayMove } from 'react-sortable-hoc';
+import layout from '../../mock/layout';
+import LayerEditorGroup from '../../components/layers/LayerEditorGroup.js';
 
 
 function layoutGroups(layerType) {
@@ -20,12 +22,23 @@ function layoutGroups(layerType) {
         title: 'JSON Editor',
         type: 'jsoneditor'
     };
+    return [layerGroup, filterGroup].concat(layout[layerType].groups).concat([editorGroup]);
 }
 
 class LayerEditor extends Component {
     constructor(props) {
         super(props);
-
+        const selectedLayer = this.getSelectedLayer();
+        const type = selectedLayer.type;
+        const groups = layoutGroups(type);
+        const editorGroups = {};
+        groups.forEach(group => {
+            editorGroups[group.title] = true;
+        });
+        this.state = {
+            editorGroups
+        };
+        console.log('editorGroup', this.state);
     }
 
     renderMenuItemsList(items) {
@@ -39,6 +52,20 @@ class LayerEditor extends Component {
                 </MenuItem>
             </li>
         );
+    }
+
+    renderLayerGroups() {
+        const selectedLayer = this.getSelectedLayer();
+        const layerType = selectedLayer.type;
+        const groups = layoutGroups(layerType)
+            .filter(group => !(layerType === 'background' && group.type === 'source'))
+            .map(group => <LayerEditorGroup
+                data-wd-key={group.title}
+                key={group.title}
+                title={group.title}
+                isActive={this.state.editorGroups[group.title]}
+                onActiveToggle={this.onGroupToggle}
+            />);
     }
 
     getSelectedLayer() {
