@@ -7,6 +7,13 @@ import { connect } from 'react-redux';
 import { arrayMove } from 'react-sortable-hoc';
 import layout from '../../mock/layout';
 import LayerEditorGroup from '../../components/layers/LayerEditorGroup.js';
+import LayerIdBlock from '../../components/layers/LayerIdBlock';
+import LayerTypeBlock from '../../components/layers/LayerTypeBlock';
+import LayerSourceBlock from '../../components/layers/LayerSourceBlock';
+import LayerSourceLayerBlock from '../../components/layers/LayerSourceLayerBlock';
+import MinZoomBlock from '../../components/layers/MinZoomBlock';
+import MaxZoomBlock from '../../components/layers/MaxZoomBlock';
+import CommentBlock from '../../components/layers/CommentBlock';
 
 
 function layoutGroups(layerType) {
@@ -28,7 +35,7 @@ function layoutGroups(layerType) {
 class LayerEditor extends Component {
     constructor(props) {
         super(props);
-        const selectedLayer = this.getSelectedLayer();
+        const { selectedLayer } = this.props;
         const type = selectedLayer.type;
         const groups = layoutGroups(type);
         const editorGroups = {};
@@ -53,19 +60,74 @@ class LayerEditor extends Component {
             </li>
         );
     }
+    onGroupToggle(title, active) {
+        const changedEditorGroups = {
+            ...this.state.editorGroups,
+            [title]: active
+        };
+        this.setState({
+            editorGroups: changedEditorGroups
+        });
+    }
 
     renderLayerGroups() {
-        const selectedLayer = this.getSelectedLayer();
+        const { selectedLayer } = this.props;
         const layerType = selectedLayer.type;
         const groups = layoutGroups(layerType)
             .filter(group => !(layerType === 'background' && group.type === 'source'))
-            .map(group => <LayerEditorGroup
-                data-wd-key={group.title}
-                key={group.title}
-                title={group.title}
-                isActive={this.state.editorGroups[group.title]}
-                onActiveToggle={this.onGroupToggle}
-            />);
+            .map(group =>
+                <LayerEditorGroup
+                    data-wd-key={group.title}
+                    key={group.title}
+                    title={group.title}
+                    isActive={this.state.editorGroups[group.title]}
+                    onActiveToggle={this.onGroupToggle.bind(this, group.title)}
+                >
+                </LayerEditorGroup>);
+    }
+
+    renderGroupTypes(type, fields) {
+        let comment = '';
+        const { selectedLayer, sources } = this.props;
+        if (selectedLayer.metadata) {
+            comment = selectedLayer.metadata['maputnik:comment'];
+        }
+        let sourceLayerIds;
+        if (sources.hasOwnProperty(selectedLayer.source)) {
+            sourceLayerIds = sources[selectedLayer.source].layers;
+        }
+
+        const blockEditors = {
+            'layer': <div>
+                <LayerIdBlock
+
+                />
+                <LayerTypeBlock
+
+                />
+                {
+                    selectedLayer.type !== 'background' &&
+                    <LayerSourceBlock
+
+                    />
+                }
+                {
+                    ['background', 'raster', 'hillshade', 'heatmap'].indexOf(selectedLayer.type) < 0 &&
+                    <LayerSourceLayerBlock
+
+                    />
+                }
+                <MinZoomBlock
+
+                />
+                <MaxZoomBlock
+
+                />
+                <CommentBlock
+
+                />
+            </div>
+        };
     }
 
     getSelectedLayer() {
@@ -93,7 +155,7 @@ class LayerEditor extends Component {
 
     render() {
         const props = this.props;
-        const selectedLayer = this.getSelectedLayer();
+        const { selectedLayer } = props;
         if (!selectedLayer) return null;
         const layout = selectedLayer.layout || {};
         const items = {
@@ -157,12 +219,16 @@ class LayerEditor extends Component {
 
 LayerEditor.propTypes = {
     layers: PropTypes.array.isRequired,
-    selectedLayerIndex: PropTypes.number
+    selectedLayerIndex: PropTypes.number,
+    selectedLayer: PropTypes.object,
+    sources: PropTypes.object
 };
 
-const mapState = ({ mapStyle, selectedLayerIndex }) => ({
+const mapState = ({ mapStyle, selectedLayerIndex, sources }) => ({
     layers: mapStyle.layers,
     selectedLayerIndex,
+    selectedLayer: mapStyle.layers.length > 0 ? mapStyle.layers[selectedLayerIndex] : null,
+    sources,
 });
 
 
