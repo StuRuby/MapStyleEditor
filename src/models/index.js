@@ -8,3 +8,4 @@ export { default as modalsOpen } from './modalsOpen';
 export { default as selectedLayerIndex } from './selectedLayerIndex';
 export { default as sources } from './sources';
 export { default as spec } from './spec';
+export { default as vectorLayers } from './vectorLayers';

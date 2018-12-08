@@ -14,6 +14,10 @@ import LayerSourceLayerBlock from '../../components/layers/LayerSourceLayerBlock
 import MinZoomBlock from '../../components/layers/MinZoomBlock';
 import MaxZoomBlock from '../../components/layers/MaxZoomBlock';
 import CommentBlock from '../../components/layers/CommentBlock';
+import style from '../../libs/style';
+import { changeType, changeProperty } from '../../libs/layer';
+import FilterEditor from '../../components/filter/FilterEditor';
+import PropertyGroup from '../../components/fields/'
 
 
 
@@ -46,6 +50,42 @@ class LayerEditor extends Component {
         this.state = {
             editorGroups
         };
+    }
+
+    onLayerIdChange(newIndex) {
+        const { selectedLayer, layers, onLayerChanged } = this.props;
+        const id = selectedLayer.id;
+        const _layers = layers.slice();
+        const idx = style.indexOfLayer(_layers, id);
+        _layers[idx] = {
+            ..._layers[idx],
+            id: newIndex
+        };
+        onLayerChanged(_layers);
+    }
+
+    onLayerTypeChange(newType) {
+        const { selectedLayer, onLayerChanged } = this.props;
+        const _layers = changeType(selectedLayer, newType);
+        onLayerChanged(_layers);
+    }
+
+    // onLayerSourceBlockChange(value){
+    //     const { selectedLayer,onLayerChanged }= this.props;
+    //     const _layers= changeProperty(selectedLayer,null,'source',value);
+    //     onLayerChanged(_layers);
+    // }
+
+    // onLayerSourceLayerBlockChange(value){
+    //     const { selectedLayer,onLayerChanged }= this.props;
+    //     const _layers = changeProperty(selectedLayer,null,'source-layer',value);
+    //     onLayerChanged(_layers);
+    // }
+
+    onLayerPropertyChange(group, property, newValue) {
+        const { selectedLayer, onLayerChanged } = this.props;
+        const _layers = changeProperty(selectedLayer, group, property, newValue);
+        onLayerChanged(_layers);
     }
 
     renderMenuItemsList(items) {
@@ -88,7 +128,7 @@ class LayerEditor extends Component {
 
     renderGroupTypes(type, fields) {
         let comment = '';
-        const { selectedLayer, sources } = this.props;
+        const { selectedLayer, sources, vectorLayers } = this.props;
         if (selectedLayer.metadata) {
             comment = selectedLayer.metadata['maputnik:comment'];
         }
@@ -102,17 +142,18 @@ class LayerEditor extends Component {
                 <LayerIdBlock
                     value={selectedLayer.id}
                     wdKey='layer-editor.layer-id'
-                    onChange={() => { }}
+                    onChange={this.onLayerIdChange}
                 />
                 <LayerTypeBlock
                     value={selectedLayer.type}
-                    onChange={() => { }}
+                    onChange={this.onLayerTypeChange}
                 />
                 {
                     selectedLayer.type !== 'background' &&
                     <LayerSourceBlock
                         sourceIds={Object.keys(this.props.sources)}
                         value={selectedLayer['source']}
+                        onChange={(value) => this.onLayerPropertyChange(null, 'source', value)}
                     />
                 }
                 {
@@ -120,23 +161,33 @@ class LayerEditor extends Component {
                     <LayerSourceLayerBlock
                         sourceLayerIds={sourceLayerIds}
                         value={selectedLayer['source-layer']}
+                        onChange={(value) => this.onLayerPropertyChange(null, 'source-layer', value)}
                     />
                 }
                 <MinZoomBlock
                     value={selectedLayer.minzoom}
+                    onChange={value => this.onLayerPropertyChange(null, 'minzoom', value)}
                 />
                 <MaxZoomBlock
                     value={selectedLayer.maxzoom}
+                    onChange={value => this.onLayerPropertyChange(null, 'maxzoom', value)}
                 />
                 <CommentBlock
                     value={comment}
+                    onChange={value => this.onLayerPropertyChange('metadata', 'maputnik:comment', value == '' ? undefined : value)}
                 />
             </div>,
             'filter': <div>
                 <div className='maputnik-filter-editor-wrapper'>
-
+                    <FilterEditor
+                        filter={selectedLayer.filter}
+                        properties={vectorLayers[selectedLayer['source-layer']]}
+                        onChange={value => this.onLayerPropertyChange(null, 'filter', value)}
+                    />
                 </div>
-            </div>
+            </div>,
+            'properties': <div></div>,
+            'jsoneditor': <div></div>
         };
     }
 
@@ -234,11 +285,12 @@ LayerEditor.propTypes = {
     sources: PropTypes.object
 };
 
-const mapState = ({ mapStyle, selectedLayerIndex, sources }) => ({
+const mapState = ({ mapStyle, selectedLayerIndex, sources, vectorLayers }) => ({
     layers: mapStyle.layers,
     selectedLayerIndex,
     selectedLayer: mapStyle.layers.length > 0 ? mapStyle.layers[selectedLayerIndex] : null,
     sources,
+    vectorLayers,
 });
 
 
