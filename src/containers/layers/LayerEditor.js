@@ -5,19 +5,22 @@ import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
 import { MdMoreVert } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { arrayMove } from 'react-sortable-hoc';
-import layout from '../../mock/layout';
-import LayerEditorGroup from '../../components/layers/LayerEditorGroup.js';
-import LayerIdBlock from '../../components/layers/LayerIdBlock';
-import LayerTypeBlock from '../../components/layers/LayerTypeBlock';
-import LayerSourceBlock from '../../components/layers/LayerSourceBlock';
-import LayerSourceLayerBlock from '../../components/layers/LayerSourceLayerBlock';
-import MinZoomBlock from '../../components/layers/MinZoomBlock';
-import MaxZoomBlock from '../../components/layers/MaxZoomBlock';
-import CommentBlock from '../../components/layers/CommentBlock';
+import {
+    LayerEditorGroup,
+    LayerIdBlock,
+    LayerTypeBlock,
+    LayerSourceBlock,
+    LayerSourceLayerBlock,
+    MinZoomBlock,
+    MaxZoomBlock,
+    CommentBlock,
+    JsonEditor
+} from '../../components/layers';
 import style from '../../libs/style';
 import { changeType, changeProperty } from '../../libs/layer';
 import FilterEditor from '../../components/filter/FilterEditor';
-import PropertyGroup from '../../components/fields/'
+import { PropertyGroup } from '../../components/fields';
+import layout from '../../mock/layout';
 
 
 
@@ -70,22 +73,43 @@ class LayerEditor extends Component {
         onLayerChanged(_layers);
     }
 
-    // onLayerSourceBlockChange(value){
-    //     const { selectedLayer,onLayerChanged }= this.props;
-    //     const _layers= changeProperty(selectedLayer,null,'source',value);
-    //     onLayerChanged(_layers);
-    // }
-
-    // onLayerSourceLayerBlockChange(value){
-    //     const { selectedLayer,onLayerChanged }= this.props;
-    //     const _layers = changeProperty(selectedLayer,null,'source-layer',value);
-    //     onLayerChanged(_layers);
-    // }
-
     onLayerPropertyChange(group, property, newValue) {
         const { selectedLayer, onLayerChanged } = this.props;
         const _layers = changeProperty(selectedLayer, group, property, newValue);
         onLayerChanged(_layers);
+    }
+
+    onGroupToggle(title, active) {
+        const changedEditorGroups = {
+            ...this.state.editorGroups,
+            [title]: active
+        };
+        this.setState({
+            editorGroups: changedEditorGroups
+        });
+    }
+
+    getSelectedLayer() {
+        const { layers, selectedLayerIndex } = this.props;
+        return layers.length > 0 ? layers[selectedLayerIndex] : null;
+    }
+
+    moveLayer(offset) {
+        const props = this.props;
+        let oldIndex = props.selectedLayerIndex;
+        let newIndex = props.selectedLayerIndex + offset;
+        const layers = props.layers;
+        oldIndex = clamp(oldIndex, 0, layers.length - 1);
+        newIndex = clamp(newIndex, 0, layers.length - 1);
+
+        if (oldIndex === newIndex) return;
+        if (oldIndex === props.selectedLayerIndex) {
+            props.setSelectedLayerIndex(newIndex);
+        }
+
+        let _layers = layers.slice();
+        _layers = arrayMove(_layers, oldIndex, newIndex);
+        props.onLayerChanged(_layers);
     }
 
     renderMenuItemsList(items) {
@@ -99,15 +123,6 @@ class LayerEditor extends Component {
                 </MenuItem>
             </li>
         );
-    }
-    onGroupToggle(title, active) {
-        const changedEditorGroups = {
-            ...this.state.editorGroups,
-            [title]: active
-        };
-        this.setState({
-            editorGroups: changedEditorGroups
-        });
     }
 
     renderLayerGroups() {
@@ -128,7 +143,7 @@ class LayerEditor extends Component {
 
     renderGroupTypes(type, fields) {
         let comment = '';
-        const { selectedLayer, sources, vectorLayers } = this.props;
+        const { selectedLayer, sources, vectorLayers, spec, onLayerChanged } = this.props;
         if (selectedLayer.metadata) {
             comment = selectedLayer.metadata['maputnik:comment'];
         }
@@ -186,32 +201,17 @@ class LayerEditor extends Component {
                     />
                 </div>
             </div>,
-            'properties': <div></div>,
-            'jsoneditor': <div></div>
+            'properties': <PropertyGroup
+                layer={selectedLayer}
+                groupFields={fields}
+                spec={spec}
+                onChange={this.onLayerPropertyChange.bind(this)}
+            />,
+            'jsoneditor': <JSONEditor
+                layer={selectedLayer}
+                onChange={onLayerChanged}
+            />
         };
-    }
-
-    getSelectedLayer() {
-        const { layers, selectedLayerIndex } = this.props;
-        return layers.length > 0 ? layers[selectedLayerIndex] : null;
-    }
-
-    moveLayer(offset) {
-        const props = this.props;
-        let oldIndex = props.selectedLayerIndex;
-        let newIndex = props.selectedLayerIndex + offset;
-        const layers = props.layers;
-        oldIndex = clamp(oldIndex, 0, layers.length - 1);
-        newIndex = clamp(newIndex, 0, layers.length - 1);
-
-        if (oldIndex === newIndex) return;
-        if (oldIndex === props.selectedLayerIndex) {
-            props.setSelectedLayerIndex(newIndex);
-        }
-
-        let _layers = layers.slice();
-        _layers = arrayMove(_layers, oldIndex, newIndex);
-        props.onLayerChanged(_layers);
     }
 
     render() {
