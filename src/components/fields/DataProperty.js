@@ -20,7 +20,7 @@ export default function DataProperty(props) {
         if (fieldSpec.expression.interpolated) {
             return ['categorical', 'interval', 'exponential'];
         } else {
-            return ['categorical', 'interval']
+            return ['categorical', 'interval'];
         }
     };
 

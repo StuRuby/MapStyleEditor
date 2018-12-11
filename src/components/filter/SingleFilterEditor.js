@@ -7,13 +7,13 @@ import { otherFilterOps } from '../../libs/filterops';
 
 
 function tryParseInt(v) {
-    if (v === '') return v
-    if (isNaN(v)) return v
-    return parseFloat(v)
+    if (v === '') return v;
+    if (isNaN(v)) return v;
+    return parseFloat(v);
 }
 
 function tryParseBool(v) {
-    const isString = (typeof (v) === "string");
+    const isString = (typeof (v) === 'string');
     if (!isString) {
         return v;
     }

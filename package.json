@@ -57,7 +57,7 @@
     "codemirror": "^5.42.0",
     "color": "^3.1.0",
     "immutable": "^4.0.0-rc.12",
-    "jsonlint": "^1.6.3",
+    "jsonlint": "github:josdejong/jsonlint#85a19d7",
     "lodash.capitalize": "^4.2.1",
     "lodash.clamp": "^4.0.3",
     "lodash.clonedeep": "^4.5.0",

@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { latest } from '@mapbox/mapbox-gl-style-spec'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { latest } from '@mapbox/mapbox-gl-style-spec';
 import { InputBlock, NumberInput } from '../input';
 
 export default function MaxZoomBlock(props) {

@@ -5,30 +5,30 @@ import FunctionSpecField from './FunctionSpecField';
 /** Extract field spec by {@fieldName} from the {@layerType} in the
  * style specification from either the paint or layout group */
 function getFieldSpec(spec, layerType, fieldName) {
-    const groupName = getGroupName(spec, layerType, fieldName)
-    const group = spec[groupName + '_' + layerType]
-    const fieldSpec = group[fieldName]
+    const groupName = getGroupName(spec, layerType, fieldName);
+    const group = spec[groupName + '_' + layerType];
+    const fieldSpec = group[fieldName];
     if (iconProperties.indexOf(fieldName) >= 0) {
         return {
             ...fieldSpec,
             values: spec.$root.sprite.values
-        }
+        };
     }
     if (fieldName === 'text-font') {
         return {
             ...fieldSpec,
             values: spec.$root.glyphs.values
-        }
+        };
     }
-    return fieldSpec
+    return fieldSpec;
 }
 
 function getGroupName(spec, layerType, fieldName) {
-    const paint = spec['paint_' + layerType] || {}
+    const paint = spec['paint_' + layerType] || {};
     if (fieldName in paint) {
-        return 'paint'
+        return 'paint';
     } else {
-        return 'layout'
+        return 'layout';
     }
 }
 

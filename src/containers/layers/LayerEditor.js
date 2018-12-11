@@ -14,15 +14,13 @@ import {
     MinZoomBlock,
     MaxZoomBlock,
     CommentBlock,
-    JsonEditor
+    JSONEditor,
 } from '../../components/layers';
 import style from '../../libs/style';
 import { changeType, changeProperty } from '../../libs/layer';
 import FilterEditor from '../../components/filter/FilterEditor';
 import { PropertyGroup } from '../../components/fields';
 import layout from '../../mock/layout';
-
-
 
 function layoutGroups(layerType) {
     const layerGroup = {
@@ -282,15 +280,24 @@ LayerEditor.propTypes = {
     layers: PropTypes.array.isRequired,
     selectedLayerIndex: PropTypes.number,
     selectedLayer: PropTypes.object,
-    sources: PropTypes.object
+    sources: PropTypes.object,
+    vectorLayers: PropTypes.object,
+    spec: PropTypes.object,
+    onLayerChanged: PropTypes.func,
+    onLayerSelect: PropTypes.func,
+    onLayerDestroy: PropTypes.func,
+    onLayerCopy: PropTypes.func,
+    onLayerVisibilityToggle: PropTypes.func,
+    setSelectedLayerIndex: PropTypes.func,
 };
 
-const mapState = ({ mapStyle, selectedLayerIndex, sources, vectorLayers }) => ({
+const mapState = ({ mapStyle, selectedLayerIndex, sources, vectorLayers, spec }) => ({
     layers: mapStyle.layers,
     selectedLayerIndex,
     selectedLayer: mapStyle.layers.length > 0 ? mapStyle.layers[selectedLayerIndex] : null,
     sources,
     vectorLayers,
+    spec,
 });
 
 

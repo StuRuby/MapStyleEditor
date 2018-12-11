@@ -44,7 +44,7 @@ export default class FilterEditor extends Component {
                 onChange={() => { }}
             />
 
-        </FilterEditorBlock>)
+        </FilterEditorBlock>);
     }
 
     render() {

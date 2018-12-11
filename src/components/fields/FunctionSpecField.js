@@ -113,7 +113,7 @@ export default function FunctionSpecField(props) {
 
     return (
         <div
-            data-wd-key={`spec-field:${props.fileName}`}
+            data-wd-key={`spec-field:${props.fieldName}`}
             className={className}
         >
             {specField}
@@ -123,7 +123,7 @@ export default function FunctionSpecField(props) {
 
 FunctionSpecField.propTypes = {
     onChange: PropTypes.func.isRequired,
-    fileName: PropTypes.string.isRequired,
+    fieldName: PropTypes.string.isRequired,
     fieldSpec: PropTypes.object.isRequired,
     value: PropTypes.oneOfType([
         PropTypes.object,

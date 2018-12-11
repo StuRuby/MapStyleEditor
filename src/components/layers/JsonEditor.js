@@ -5,18 +5,18 @@ import InputBlock from '../input/InputBlock';
 import StringInput from '../input/StringInput';
 import jsonlint from 'jsonlint';
 
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/addon/lint/lint';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/addon/lint/lint.css';
-import '../../styles/codemirror-maputnik.css';
+// import 'codemirror/mode/javascript/javascript';
+// import 'codemirror/addon/lint/lint';
+// import 'codemirror/lib/codemirror.css';
+// import 'codemirror/addon/lint/lint.css';
+// import '../../styles/codemirror-maputnik.css';
 
 
 export default class JSONEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            code: JSON.stringify(props.selectedLayer, null, 2);
+            code: JSON.stringify(props.selectedLayer, null, 2)
         };
     }
 

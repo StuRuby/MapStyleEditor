@@ -29,10 +29,10 @@ function sortNumerically(a, b) {
     b = parseFloat(b, 10);
 
     if (a < b) {
-        return -1
+        return -1;
     }
     else if (a > b) {
-        return 1
+        return 1;
     }
     else {
         return 0;
@@ -134,3 +134,19 @@ export default class ZoomProperty extends Component {
         );
     }
 }
+
+
+ZoomProperty.propTypes = {
+    onChange: PropTypes.func,
+    onDeleteStop: PropTypes.func,
+    onAddStop: PropTypes.func,
+    fieldName: PropTypes.string,
+    fieldSpec: PropTypes.object,
+    value: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+        PropTypes.array
+    ]),
+};

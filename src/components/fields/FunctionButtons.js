@@ -15,7 +15,7 @@ export default function FunctionButton(props) {
                 <DocLabel
                     label={<MdFunctions />}
                     cursorTargetStyle={{ cursor: 'pointer' }}
-                    doc={`Turn property into a zoom function to enable a map feature to change with map's zoom level.`}
+                    doc={'Turn property into a zoom function to enable a map feature to change with map\'s zoom level.'}
                 />
             </Button>
             {
@@ -27,11 +27,11 @@ export default function FunctionButton(props) {
                     <DocLabel
                         label={<MdInsertChart />}
                         cursorTargetStyle={{ cursor: 'pointer' }}
-                        doc={`Turn property into a data function to enable a map feature to change according to data properties and the map's zoom level.`}
+                        doc={'Turn property into a data function to enable a map feature to change according to data properties and the map\'s zoom level.'}
                     />
                 </Button>
             }
-        </div>
+        </div>;
 }
 
 FunctionButton.propTypes = {
