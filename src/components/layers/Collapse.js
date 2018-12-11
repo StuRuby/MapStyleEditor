@@ -10,7 +10,7 @@ export default function Collapse(props) {
         ? <div style={{ display: props.isActive ? 'block' : 'none' }} >
             {props.children}
         </div>
-        : <CollapseWrapper isOpen={props.isActive} >
+        : <CollapseWrapper isOpened={props.isActive} >
             {props.children}
         </CollapseWrapper>;
 }

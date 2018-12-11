@@ -35,14 +35,14 @@ function getGroupName(spec, layerType, fieldName) {
 export default function PropertyGroup(props) {
 
     const onPropertyChange = (property, newValue) => {
-        const group = getGroupName(props.spec, props.selectedLayer.type, property);
+        const group = getGroupName(props.spec, props.layer.type, property);
         props.onChange(group, property, newValue);
     };
 
     const fields = props.groupFields.map(fieldName => {
-        const fieldSpec = getFieldSpec(props.spec, props.selectedLayer.type, fieldName);
-        const paint = props.selectedLayer.paint || {};
-        const layout = props.selectedLayer.layout || {};
+        const fieldSpec = getFieldSpec(props.spec, props.layer.type, fieldName);
+        const paint = props.layer.paint || {};
+        const layout = props.layer.layout || {};
         const filedValue = fieldName in paint ? paint[fieldName] : layout[fieldName];
 
         return (
@@ -55,7 +55,7 @@ export default function PropertyGroup(props) {
             />
         );
     });
-
+    console.log('this is a first');
     return (
         <div className='maputnik-property-group'>
             {fields}
@@ -64,7 +64,7 @@ export default function PropertyGroup(props) {
 }
 
 PropertyGroup.propTypes = {
-    selectedLayer: PropTypes.object.isRequired,
+    layer: PropTypes.object.isRequired,
     groupFields: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
     spec: PropTypes.object.isRequired

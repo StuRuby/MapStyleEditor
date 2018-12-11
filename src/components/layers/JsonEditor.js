@@ -16,13 +16,13 @@ export default class JSONEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            code: JSON.stringify(props.selectedLayer, null, 2)
+            code: JSON.stringify(props.layer, null, 2)
         };
     }
 
     static getDerivedStateFromProps(props, state) {
         return {
-            code: JSON.stringify(props.selectedLayer, null, 2)
+            code: JSON.stringify(props.layer, null, 2)
         };
     }
 
@@ -41,7 +41,7 @@ export default class JSONEditor extends Component {
 
     resetValue() {
         this.setState({
-            code: JSON.stringify(this.props.selectedLayer, null, 2)
+            code: JSON.stringify(this.props.layer, null, 2)
         });
     }
 
@@ -68,6 +68,6 @@ export default class JSONEditor extends Component {
 }
 
 JSONEditor.propTypes = {
-    selectedLayer: PropTypes.object.isRequired,
+    layer: PropTypes.object.isRequired,
     onLayerChanged: PropTypes.func
 };

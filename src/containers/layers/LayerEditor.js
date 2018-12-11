@@ -128,15 +128,20 @@ class LayerEditor extends Component {
         const layerType = selectedLayer.type;
         const groups = layoutGroups(layerType)
             .filter(group => !(layerType === 'background' && group.type === 'source'))
-            .map(group =>
-                <LayerEditorGroup
-                    data-wd-key={group.title}
-                    key={group.title}
-                    title={group.title}
-                    isActive={this.state.editorGroups[group.title]}
-                    onActiveToggle={this.onGroupToggle.bind(this, group.title)}
-                >
-                </LayerEditorGroup>);
+            .map(group => {
+                return (
+                    <LayerEditorGroup
+                        data-wd-key={group.title}
+                        key={group.title}
+                        title={group.title}
+                        isActive={this.state.editorGroups[group.title]}
+                        onActiveToggle={this.onGroupToggle.bind(this, group.title)}
+                    >
+                        {this.renderGroupTypes(group.type, group.fields)}
+                    </LayerEditorGroup>
+                );
+            });
+        return groups;
     }
 
     renderGroupTypes(type, fields) {
@@ -149,67 +154,78 @@ class LayerEditor extends Component {
         if (sources.hasOwnProperty(selectedLayer.source)) {
             sourceLayerIds = sources[selectedLayer.source].layers;
         }
-
-        const blockEditors = {
-            'layer': <div>
-                <LayerIdBlock
-                    value={selectedLayer.id}
-                    wdKey='layer-editor.layer-id'
-                    onChange={this.onLayerIdChange}
-                />
-                <LayerTypeBlock
-                    value={selectedLayer.type}
-                    onChange={this.onLayerTypeChange}
-                />
-                {
-                    selectedLayer.type !== 'background' &&
-                    <LayerSourceBlock
-                        sourceIds={Object.keys(this.props.sources)}
-                        value={selectedLayer['source']}
-                        onChange={(value) => this.onLayerPropertyChange(null, 'source', value)}
+        switch (type) {
+            case 'layer':
+                return (
+                    <div>
+                        <LayerIdBlock
+                            value={selectedLayer.id}
+                            wdKey='layer-editor.layer-id'
+                            onChange={this.onLayerIdChange}
+                        />
+                        <LayerTypeBlock
+                            value={selectedLayer.type}
+                            onChange={this.onLayerTypeChange}
+                        />
+                        {
+                            selectedLayer.type !== 'background' &&
+                            <LayerSourceBlock
+                                sourceIds={Object.keys(this.props.sources)}
+                                value={selectedLayer['source']}
+                                onChange={(value) => this.onLayerPropertyChange(null, 'source', value)}
+                            />
+                        }
+                        {
+                            ['background', 'raster', 'hillshade', 'heatmap'].indexOf(selectedLayer.type) < 0 &&
+                            <LayerSourceLayerBlock
+                                sourceLayerIds={sourceLayerIds}
+                                value={selectedLayer['source-layer']}
+                                onChange={(value) => this.onLayerPropertyChange(null, 'source-layer', value)}
+                            />
+                        }
+                        <MinZoomBlock
+                            value={selectedLayer.minzoom}
+                            onChange={value => this.onLayerPropertyChange(null, 'minzoom', value)}
+                        />
+                        <MaxZoomBlock
+                            value={selectedLayer.maxzoom}
+                            onChange={value => this.onLayerPropertyChange(null, 'maxzoom', value)}
+                        />
+                        <CommentBlock
+                            value={comment}
+                            onChange={value => this.onLayerPropertyChange('metadata', 'maputnik:comment', value == '' ? undefined : value)}
+                        />
+                    </div>
+                );
+            case 'filter':
+                return (
+                    <div>
+                        <div className='maputnik-filter-editor-wrapper'>
+                            <FilterEditor
+                                filter={selectedLayer.filter}
+                                properties={vectorLayers[selectedLayer['source-layer']]}
+                                onChange={value => this.onLayerPropertyChange(null, 'filter', value)}
+                            />
+                        </div>
+                    </div>
+                );
+            case 'properties':
+                return (
+                    <PropertyGroup
+                        layer={selectedLayer}
+                        groupFields={fields}
+                        spec={spec}
+                        onChange={this.onLayerPropertyChange.bind(this)}
                     />
-                }
-                {
-                    ['background', 'raster', 'hillshade', 'heatmap'].indexOf(selectedLayer.type) < 0 &&
-                    <LayerSourceLayerBlock
-                        sourceLayerIds={sourceLayerIds}
-                        value={selectedLayer['source-layer']}
-                        onChange={(value) => this.onLayerPropertyChange(null, 'source-layer', value)}
+                );
+            case 'jsoneditor':
+                return (
+                    <JSONEditor
+                        layer={selectedLayer}
+                        onChange={onLayerChanged}
                     />
-                }
-                <MinZoomBlock
-                    value={selectedLayer.minzoom}
-                    onChange={value => this.onLayerPropertyChange(null, 'minzoom', value)}
-                />
-                <MaxZoomBlock
-                    value={selectedLayer.maxzoom}
-                    onChange={value => this.onLayerPropertyChange(null, 'maxzoom', value)}
-                />
-                <CommentBlock
-                    value={comment}
-                    onChange={value => this.onLayerPropertyChange('metadata', 'maputnik:comment', value == '' ? undefined : value)}
-                />
-            </div>,
-            'filter': <div>
-                <div className='maputnik-filter-editor-wrapper'>
-                    <FilterEditor
-                        filter={selectedLayer.filter}
-                        properties={vectorLayers[selectedLayer['source-layer']]}
-                        onChange={value => this.onLayerPropertyChange(null, 'filter', value)}
-                    />
-                </div>
-            </div>,
-            'properties': <PropertyGroup
-                layer={selectedLayer}
-                groupFields={fields}
-                spec={spec}
-                onChange={this.onLayerPropertyChange.bind(this)}
-            />,
-            'jsoneditor': <JSONEditor
-                layer={selectedLayer}
-                onChange={onLayerChanged}
-            />
-        };
+                );
+        }
     }
 
     render() {
@@ -271,6 +287,7 @@ class LayerEditor extends Component {
                         </div>
                     </div>
                 </header>
+                {this.renderLayerGroups()}
             </div>
         );
     }

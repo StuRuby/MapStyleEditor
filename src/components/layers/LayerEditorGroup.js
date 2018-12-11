@@ -10,7 +10,7 @@ export default function LayerEditorGroup(props) {
     return (
         <div>
             <div className='maputnik-layer-editor-group'
-                data-wd-key={'layer-editor-group:' + this.props['data-wd-key']}
+                data-wd-key={'layer-editor-group:' + props['data-wd-key']}
                 onClick={onClickHandler}
             >
                 <span>{props.title}</span>
