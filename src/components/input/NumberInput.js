@@ -44,7 +44,7 @@ export default function NumberInput(props) {
 
 NumberInput.propTypes = {
     value: PropTypes.number,
-    default: PropTypes.string,
+    default: PropTypes.number,
     min: PropTypes.number,
     max: PropTypes.number,
     onChange: PropTypes.func,

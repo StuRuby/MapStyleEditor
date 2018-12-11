@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FunctionSpecField from './FunctionSpecField';
 
+const iconProperties = ['background-pattern', 'fill-pattern', 'line-pattern', 'fill-extrusion-pattern', 'icon-image'];
+
 /** Extract field spec by {@fieldName} from the {@layerType} in the
  * style specification from either the paint or layout group */
 function getFieldSpec(spec, layerType, fieldName) {

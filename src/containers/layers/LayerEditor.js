@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import clamp from 'lodash.clamp';
+import autobind from 'react-autobind';
 import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton';
 import { MdMoreVert } from 'react-icons/md';
 import { connect } from 'react-redux';
@@ -41,6 +42,7 @@ function layoutGroups(layerType) {
 class LayerEditor extends Component {
     constructor(props) {
         super(props);
+        autobind(this);
         const { selectedLayer } = this.props;
         const type = selectedLayer.type;
         const groups = layoutGroups(type);

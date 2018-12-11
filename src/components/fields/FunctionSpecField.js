@@ -114,7 +114,7 @@ export default function FunctionSpecField(props) {
     return (
         <div
             data-wd-key={`spec-field:${props.fieldName}`}
-            className={className}
+            className={classname}
         >
             {specField}
         </div>
