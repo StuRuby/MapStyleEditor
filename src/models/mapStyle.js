@@ -1686,7 +1686,16 @@ const styleJson = {
 export default {
     state: styleJson,
     reducers: {
-        changeLayer(state, changedLayers) {
+        changeLayer(state, layer) {
+            const layers = state.layers.slice();
+            const idx = style.indexOfLayer(layers, layer.id);
+            layers[idx] = layer;
+            return {
+                ...state,
+                layers,
+            };
+        },
+        setChangedLayers(state, changedLayers) {
             return {
                 ...state,
                 layers: changedLayers

@@ -76,6 +76,7 @@ class LayerEditor extends Component {
     onLayerPropertyChange(group, property, newValue) {
         const { selectedLayer, onLayerChanged } = this.props;
         const _layers = changeProperty(selectedLayer, group, property, newValue);
+        console.log('_layers', _layers);
         onLayerChanged(_layers);
     }
 
@@ -328,7 +329,7 @@ const mapDispatch = ({
     onLayerDestroy: (layerId) => destoryLayer(layerId),
     onLayerCopy: (layerId) => copyLayer(layerId),
     onLayerVisibilityToggle: (layerId) => toggleLayerVisibility(layerId),
-    onLayerChanged: (layers) => changeLayer(layers),
+    onLayerChanged: (layer) => changeLayer(layer),
     setSelectedLayerIndex: (index) => setSelectedLayerIndex(index),
 });
 

@@ -242,13 +242,13 @@ const mapState = ({ mapStyle, selectedLayerIndex, sources }) => ({
 
 const mapDispatch = ({
     selectedLayerIndex: { setLayerSelect, setSelectedLayerIndex },
-    mapStyle: { destoryLayer, copyLayer, toggleLayerVisibility, changeLayer }
+    mapStyle: { destoryLayer, copyLayer, toggleLayerVisibility, setChangedLayers }
 }) => ({
     onLayerSelect: (layers, idx) => setLayerSelect(layers, idx),
     onLayerDestroy: (layerId) => destoryLayer(layerId),
     onLayerCopy: (layerId) => copyLayer(layerId),
     onLayerVisibilityToggle: (layerId) => toggleLayerVisibility(layerId),
-    onLayerChanged: (layers) => changeLayer(layers),
+    onLayerChanged: (layers) => setChangedLayers(layers),
     setSelectedLayerIndex: (index) => setSelectedLayerIndex(index),
 });
 
