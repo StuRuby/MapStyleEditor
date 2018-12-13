@@ -51,7 +51,7 @@ export default class FilterEditor extends Component {
     }
 
     addFilterItem() {
-        const newFilterItem = this.combinedFilters().slice();
+        const newFilterItem = this.combiningFilter().slice();
         newFilterItem.push(['==', 'name', '']);
         this.props.onChange(newFilterItem);
     }

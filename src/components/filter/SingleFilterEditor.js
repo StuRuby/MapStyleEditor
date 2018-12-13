@@ -86,3 +86,7 @@ SingleFilterEditor.propTypes = {
     onChange: PropTypes.func.isRequired,
     properties: PropTypes.object
 };
+
+SingleFilterEditor.defaultProps = {
+    properties: {}
+};
