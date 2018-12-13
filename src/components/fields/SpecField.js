@@ -49,7 +49,7 @@ export default function SpecField(props) {
                     />
                 );
             case 'enum':
-                const options = Object.keys(props.fieldSpec.value).map(v => [v, capitalize(v)]);
+                const options = Object.keys(props.fieldSpec.values).map(v => [v, capitalize(v)]);
                 return options.length <= 3 && optionsLabelLength(options) <= 20
                     ? <MultiButtonInput
                         {...commonProps}

@@ -73,7 +73,6 @@ export default class FilterEditor extends Component {
         const filter = this.combiningFilter();
         const combiningOp = filter[0];
         const filters = filter.slice(1);
-        console.log('filters',filters);
         if (hasNestedCombiningFilter(filter)) {
             return (
                 <div className='maputnik-filter-editor-unsupported'>

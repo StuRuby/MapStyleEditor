@@ -57,7 +57,6 @@ export default function PropertyGroup(props) {
             />
         );
     });
-    console.log('this is a first');
     return (
         <div className='maputnik-property-group'>
             {fields}

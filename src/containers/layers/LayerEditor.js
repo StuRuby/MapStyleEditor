@@ -54,6 +54,17 @@ class LayerEditor extends Component {
             editorGroups
         };
     }
+    static getDerivedStateFromProps(props, state) {
+        const additionalGroups = { ...state.editorGroups };
+        layout[props.selectedLayer.type].groups.forEach(group => {
+            if (!(group.title in additionalGroups)) {
+                additionalGroups[group.title] = true;
+            }
+        });
+        return {
+            editorGroups: additionalGroups
+        };
+    }
 
     onLayerIdChange(newIndex) {
         const { selectedLayer, layers, onLayerChanged } = this.props;
@@ -76,7 +87,6 @@ class LayerEditor extends Component {
     onLayerPropertyChange(group, property, newValue) {
         const { selectedLayer, onLayerChanged } = this.props;
         const _layers = changeProperty(selectedLayer, group, property, newValue);
-        console.log('_layers', _layers);
         onLayerChanged(_layers);
     }
 

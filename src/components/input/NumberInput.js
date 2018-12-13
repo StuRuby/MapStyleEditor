@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function NumberInput(props) {
-    const [value, setValue] = useState(props.value);
-
+    const [value, setValue] = useState(props.value || '');
     const changeInputValue = (v) => {
         const newValue = parseFloat(v);
         const hasChanged = value !== newValue;

@@ -22,6 +22,7 @@ export default function ArrayInput(props) {
                 />
             );
         } else {
+            console.log('props',props);
             return (
                 <StringInput
                     key={i}
