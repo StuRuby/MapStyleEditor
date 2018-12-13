@@ -87,6 +87,7 @@ class LayerEditor extends Component {
     onLayerPropertyChange(group, property, newValue) {
         const { selectedLayer, onLayerChanged } = this.props;
         const _layers = changeProperty(selectedLayer, group, property, newValue);
+        console.log(_layers,'_layers');
         onLayerChanged(_layers);
     }
 
