@@ -43,7 +43,7 @@ export function changeProperty(layer, group, property, newValue) {
             return {
                 ...layer,
                 [group]: {
-                    ...layer,
+                    ...layer[group],
                     [property]: newValue
                 }
             };
