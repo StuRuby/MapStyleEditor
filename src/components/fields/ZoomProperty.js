@@ -15,7 +15,7 @@ function setStopRefs(props, state) {
         props.value.stops.forEach((val, idx) => {
             if (!state.refs.hasOwnProperty(idx)) {
                 if (!newRefs) {
-                    newRefs = { ...state };
+                    newRefs = { ...state.refs };
                 }
                 newRefs[idx] = docUid('stop-');
             }
@@ -57,10 +57,19 @@ export default class ZoomProperty extends Component {
         return null;
     }
 
+    componentDidMount() {
+        const newRefs = setStopRefs(this.props, this.state);
+        if (newRefs) {
+            this.setState({
+                refs: newRefs
+            });
+        }
+        return null;
+    }
+
     orderStopsByZoom(stops) {
         const mappedWithRef = stops.map((stop, index) => ({ ref: this.state.refs[index], data: stop }))
             .sort((a, b) => sortNumerically(a.data[0], b.data[0]));
-
         const newRefs = {};
         mappedWithRef.forEach((stop, index) => newRefs[index] = stop.ref);
         this.setState({
@@ -83,12 +92,11 @@ export default class ZoomProperty extends Component {
     renderZoomFields() {
         return this.props.value.stops.map((stop, index) => {
             const zoomLevel = stop[0];
-            const key = this.state.refs[idx];
+            const key = this.state.refs[index];
             const value = stop[1];
             const deleteStopBtn = <DeleteStopButton
                 onClick={this.props.onDeleteStop.bind(this, index)}
             />;
-
             return (
                 <InputBlock
                     key={key}

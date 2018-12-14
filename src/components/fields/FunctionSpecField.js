@@ -44,7 +44,7 @@ export default function FunctionSpecField(props) {
 
     const deleteStop = (stopIdx) => {
         const stops = props.value.stops.slice();
-        stops.slice(stopIdx, 1);
+        stops.splice(stopIdx, 1);
         let changedValue = {
             ...props.value,
             stops,

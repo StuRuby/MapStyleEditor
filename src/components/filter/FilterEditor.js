@@ -57,16 +57,17 @@ export default class FilterEditor extends Component {
     }
 
     renderEditorBlocks(filters) {
-        return filters.map((filter, idx) => <FilterEditorBlock
-            key={idx}
-            onDelete={this.deleteFilterItem.bind(null, idx)}
-        >
-            <SingleFilterEditor
-                properties={this.props.properties}
-                filter={filter}
-                onChange={this.onFilterPartChanged.bind(null, idx + 1)}
-            />
-        </FilterEditorBlock>);
+        return filters.map((filter, idx) =>
+            <FilterEditorBlock
+                key={idx}
+                onDelete={this.deleteFilterItem.bind(null, idx)}
+            >
+                <SingleFilterEditor
+                    properties={this.props.properties}
+                    filter={filter}
+                    onChange={this.onFilterPartChanged.bind(null, idx + 1)}
+                />
+            </FilterEditorBlock>);
     }
 
     render() {
