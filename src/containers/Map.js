@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import autobind from 'react-autobind';
 import MapboxGl from 'mapbox-gl';
 import MapboxInspect from 'mapbox-gl-inspect';
@@ -8,11 +9,47 @@ import Color from 'color';
 import colors from 'mapbox-gl-inspect/lib/colors';
 import FeatureLayerPopup from '../components/FeatureLayerPopup';
 import tokens from '../mock/tokens.js';
+import { colorHighlightedLayer } from '../libs/highlight';
 
 const IS_SUPPORTED = MapboxGl.supported();
 
+function renderPropertyPopup(features) {
+    const node = document.createElement('div');
+    ReactDOM.render(<FeatureLayerPopup features={features} />, node);
+    return node.innerHTML;
+}
 
-export default class Map extends Component {
+function buildInspectStyle(originalStyle, coloredLayers, highlightedLayer) {
+    const backgroundLayer = {
+        'id': 'background',
+        'type': 'background',
+        'paint': {
+            'background-color': '#1c1f24',
+        }
+    };
+
+    const layer = colorHighlightedLayer(highlightedLayer);
+    if (layer) {
+        coloredLayers.push(layer);
+    }
+
+    const sources = {};
+    Object.keys(originalMapStyle.sources).forEach(sourceId => {
+        const source = originalMapStyle.sources[sourceId];
+        if (source.type !== 'raster' && source.type !== 'raster-dem') {
+            sources[sourceId] = source;
+        }
+    });
+
+    const inspectStyle = {
+        ...originalMapStyle,
+        sources: sources,
+        layers: [backgroundLayer].concat(coloredLayers)
+    };
+    return inspectStyle;
+}
+
+class Map extends Component {
     constructor(props) {
         super(props);
         autobind(this);
@@ -40,7 +77,7 @@ export default class Map extends Component {
         const mapOpts = {
             ...this.props.options,
             container: this.container,
-            style: this.props.style,
+            style: this.props.mapStyle,
             hash: true
         };
 
@@ -59,7 +96,7 @@ export default class Map extends Component {
             showInspectButton: false,
             blockHoverPopupOnClick: true,
             assignLayerColor: (layerId, alpha) => Color(colors.brightColor(layerId, alpha)).desaturate(0.5).toString(),
-            buildInspectStyle: (originalMapStyle, coloredLayers) => buildInspectStyle(originalMapStyle, coloredLayers, this.props.highlightedLayer)
+            buildInspectStyle: (originalMapStyle, coloredLayers) => buildInspectStyle(originalMapStyle, coloredLayers, this.props.highlightedLayer),
             renderPopup: features => {
                 if (this.props.inspectModeEnabled) {
                     return renderPropertyPopup(features);
@@ -78,7 +115,7 @@ export default class Map extends Component {
         map.on('style.load', () => this.setState({ map, inspect }));
         map.on('data', e => {
             if (e.dataType !== 'title') return;
-            this.props.onDataChange({ map: this.state.map })
+            this.props.onDataChange({ map: this.state.map });
         });
     }
 
@@ -118,3 +155,13 @@ Map.defaultProps = {
     onLayerSelect: () => { },
     options: {}
 };
+
+const mapState = () => ({
+
+});
+
+const mapDispatch = () => ({
+
+});
+
+export default connect(mapState, mapDispatch)(Map);
