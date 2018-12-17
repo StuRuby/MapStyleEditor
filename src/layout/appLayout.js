@@ -16,8 +16,8 @@ export default function AppLayout(props) {
                     {props.layerEditor}
                 </ScrollContainer>
             </div>
-            {/* {props.map}
-            {
+            {props.map}
+            {/* {
                 props.bottom && <div className='maputnik-layout-bottom' >
                     {props.bottom}
                 </div>

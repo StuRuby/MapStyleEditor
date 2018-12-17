@@ -4,6 +4,9 @@ import ToolsBar from './containers/toolsbar';
 import { AddModal, ExportModal, LoadingModal, OpenModal, SettingModal, ShortcutsModal, SourcesModal } from './containers/modals';
 import LayerList from './containers/layers/LayerList';
 import LayerEditor from './containers/layers/LayerEditor';
+import Map from './containers/Map';
+
+
 
 function App() {
     const toolbar = <ToolsBar />;
@@ -20,12 +23,14 @@ function App() {
     );
     const layerList = <LayerList />;
     const layerEditor = <LayerEditor />;
+    const map = <Map />;
     return (
         <AppLayout
             toolbar={toolbar}
             modals={modals}
             layerList={layerList}
             layerEditor={layerEditor}
+            map={map}
         />
     );
 }
