@@ -2,7 +2,7 @@ export default class ZoomControl {
     onAdd(map) {
         this._map = map;
         this._container = document.createElement('div');
-        this._container.classList.add('mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-zoom');
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-zoom';
         this.addEventListener();
         return this._container;
     }

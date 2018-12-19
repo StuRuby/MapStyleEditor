@@ -10,6 +10,7 @@ import colors from 'mapbox-gl-inspect/lib/colors';
 import FeatureLayerPopup from '../components/FeatureLayerPopup';
 import tokens from '../mock/tokens.js';
 import { colorHighlightedLayer } from '../libs/highlight';
+import style from '../libs/style';
 
 const IS_SUPPORTED = MapboxGl.supported();
 
@@ -147,7 +148,7 @@ Map.propTypes = {
     mapStyle: PropTypes.object.isRequired,
     inspectModeEnabled: PropTypes.bool.isRequired,
     highlightedLayer: PropTypes.object,
-    options: PropTypes.object
+    options: PropTypes.object //暂时不需要
 };
 
 Map.defaultProps = {
@@ -156,12 +157,23 @@ Map.defaultProps = {
     options: {}
 };
 
-const mapState = () => ({
-
+const mapState = ({ mapStyle, mapState, selectedLayerIndex }) => ({
+    mapStyle: style.replaceAccessTokens(mapStyle, { allowFallback: true }),
+    inspectModeEnabled: mapState === 'inspect',
+    highlightedLayer: mapStyle.layers[selectedLayerIndex],
 });
 
-const mapDispatch = () => ({
-
+const mapDispatch = ({ }) => ({
 });
 
-export default connect(mapState, mapDispatch)(Map);
+
+// const mapProps = {
+//     mapStyle: style.replaceAccessTokens(this.state.mapStyle, { allowFallback: true }),
+//     options: this.state.mapOptions,
+//     onDataChange: (e) => {
+//       this.layerWatcher.analyzeMap(e.map)
+//       this.fetchSources();
+//     },
+//   }
+
+export default connect(mapState, null)(Map);

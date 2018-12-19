@@ -1,4 +1,5 @@
 import deref from '@mapbox/mapbox-gl-style-spec/deref';
+import tokens from '../mock/tokens';
 
 const emptyStyle = ensureStyleValidity({
     version: 8,
@@ -7,13 +8,13 @@ const emptyStyle = ensureStyleValidity({
 });
 
 
-function _generateId() {
+function generateId() {
     return Math.random().toString(36).substr(2, 9);
 }
 
 function _ensureHasId(style) {
     if ('id' in style) return style;
-    style.id = _generateId();
+    style.id = generateId();
     return style;
 }
 
@@ -53,9 +54,71 @@ function indexOfLayer(layers, layerId) {
 }
 
 
+function getAccessToken(sourceName, mapStyle, opts) {
+    if (sourceName === 'thunderforest_transport' || sourceName === 'thunderforest_outdoors') {
+        sourceName = 'thunderforest';
+    }
+
+    const metadata = mapStyle.metadata || {};
+    let accessToken = metadata[`maputnik:${sourceName}_access_token`];
+
+    if (opts.allowFallback && !accessToken) {
+        accessToken = tokens[sourceName];
+    }
+
+    return accessToken;
+}
+
+function replaceSourceAccessToken(mapStyle, sourceName, opts = {}) {
+    const source = mapStyle.sources[sourceName];
+    if (!source) return mapStyle;
+    if (!source.hasOwnProperty('url')) return mapStyle;
+
+    const accessToken = getAccessToken(sourceName, mapStyle, opts);
+
+    if (!accessToken) {
+        // Early exit.
+        return mapStyle;
+    }
+
+    const changedSources = {
+        ...mapStyle.sources,
+        [sourceName]: {
+            ...source,
+            url: source.url.replace('{key}', accessToken)
+        }
+    };
+    const changedStyle = {
+        ...mapStyle,
+        sources: changedSources
+    };
+    return changedStyle;
+}
+
+function replaceAccessTokens(mapStyle, opts = {}) {
+    let changedStyle = mapStyle;
+
+    Object.keys(mapStyle.sources).forEach((sourceName) => {
+        changedStyle = replaceSourceAccessToken(changedStyle, sourceName, opts);
+    });
+
+    if (mapStyle.glyphs && mapStyle.glyphs.match(/\.tilehosting\.com/)) {
+        const newAccessToken = getAccessToken('openmaptiles', mapStyle, opts);
+        if (newAccessToken) {
+            changedStyle = {
+                ...changedStyle,
+                glyphs: mapStyle.glyphs.replace('{key}', newAccessToken)
+            };
+        }
+    }
+
+    return changedStyle;
+}
 
 export default {
     ensureStyleValidity,
     emptyStyle,
     indexOfLayer,
+    generateId,
+    replaceAccessTokens,
 };
