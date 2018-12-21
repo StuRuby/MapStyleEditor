@@ -11,6 +11,7 @@ import FeatureLayerPopup from '../components/FeatureLayerPopup';
 import tokens from '../mock/tokens.js';
 import { colorHighlightedLayer } from '../libs/highlight';
 import style from '../libs/style';
+import LayerWatcher from '../libs/layerWatcher';
 
 const IS_SUPPORTED = MapboxGl.supported();
 
@@ -61,6 +62,9 @@ class Map extends Component {
             popupX: 0,
             popupY: 0,
         };
+        this.layerWatcher = new LayerWatcher({
+            onVectorLayersChange,
+        })
     }
 
     updateMapFromProps(props) {
@@ -71,6 +75,11 @@ class Map extends Component {
         if (!props.inspectModeEnabled) {
             this.state.map.setStyle(props.mapStyle, { diff: true });
         }
+    }
+
+    onDataChange(e) {
+        this.layerWatcher.analyzeMap(e.map);
+        this.props.loadSources();
     }
 
     componentDidMount() {
@@ -116,7 +125,7 @@ class Map extends Component {
         map.on('style.load', () => this.setState({ map, inspect }));
         map.on('data', e => {
             if (e.dataType !== 'title') return;
-            this.props.onDataChange({ map: this.state.map });
+            this.onDataChange({ map: this.state.map });
         });
     }
 
@@ -143,7 +152,6 @@ class Map extends Component {
 }
 
 Map.propTypes = {
-    onDataChange: PropTypes.func,
     onLayerSelect: PropTypes.func.isRequired,
     mapStyle: PropTypes.object.isRequired,
     inspectModeEnabled: PropTypes.bool.isRequired,
@@ -152,7 +160,6 @@ Map.propTypes = {
 };
 
 Map.defaultProps = {
-    onDataChange: () => { },
     onLayerSelect: () => { },
     options: {}
 };
@@ -163,17 +170,14 @@ const mapState = ({ mapStyle, mapState, selectedLayerIndex }) => ({
     highlightedLayer: mapStyle.layers[selectedLayerIndex],
 });
 
-const mapDispatch = ({ }) => ({
+const mapDispatch = ({
+    selectedLayerIndex: { setLayerSelect, setSelectedLayerIndex },
+    vectorLayers: { changeVectorLayers },
+    sources: { loadSources },
+}) => ({
+    onLayerSelect: (layers, idx) => setLayerSelect(layers, idx),
+    onVectorLayersChange: (value) => changeVectorLayers(value),
+    loadSources,
 });
 
-
-// const mapProps = {
-//     mapStyle: style.replaceAccessTokens(this.state.mapStyle, { allowFallback: true }),
-//     options: this.state.mapOptions,
-//     onDataChange: (e) => {
-//       this.layerWatcher.analyzeMap(e.map)
-//       this.fetchSources();
-//     },
-//   }
-
-export default connect(mapState, null)(Map);
+export default connect(mapState, mapDispatch)(Map);

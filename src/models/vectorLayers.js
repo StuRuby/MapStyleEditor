@@ -1,3 +1,10 @@
 export default {
-    state: {}
+    state: {},
+    reducers: {
+        changeVectorLayers: (state, value) => {
+            return {
+                ...value
+            };
+        }
+    }
 };
