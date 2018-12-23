@@ -3,8 +3,8 @@ import throttle from 'lodash.throttle';
 
 export default class LayerWatcher {
     constructor(opts = {}) {
-        this.onSourceChange = opts.onSourceChange || ()=> { };
-        this.onVectorLayersChange = opts.onVectorLayersChange || ()=> { };
+        this.onSourceChange = opts.onSourceChange || (() => { });
+        this.onVectorLayersChange = opts.onVectorLayersChange || (() => { });
         this._sources = {};
         this._vectorLayers = {};
         this.throttleAnalyzeVectorLayerFields = throttle(this.analyzeVectorLayerFields, 5000);
@@ -34,7 +34,7 @@ export default class LayerWatcher {
                         const knownPropertyValues = knownProperties[propName] || {};
                         knownPropertyValues[feature.properties[propName]] = {};
                         knownProperties[propName] = knownPropertyValues;
-                    })
+                    });
                 });
 
                 this._vectorLayers[vectorLayerId] = knownProperties;

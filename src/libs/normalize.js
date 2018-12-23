@@ -8,4 +8,4 @@ export function normalizeSourceURL(url, apiToken = '') {
     else {
         return url;
     }
-} 
+}

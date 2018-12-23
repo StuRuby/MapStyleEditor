@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import autobind from 'react-autobind';
@@ -63,8 +64,8 @@ class Map extends Component {
             popupY: 0,
         };
         this.layerWatcher = new LayerWatcher({
-            onVectorLayersChange,
-        })
+            onVectorLayersChange: this.props.onVectorLayersChange,
+        });
     }
 
     updateMapFromProps(props) {
@@ -153,6 +154,8 @@ class Map extends Component {
 
 Map.propTypes = {
     onLayerSelect: PropTypes.func.isRequired,
+    loadSources: PropTypes.func,
+    onVectorLayersChange: PropTypes.func,
     mapStyle: PropTypes.object.isRequired,
     inspectModeEnabled: PropTypes.bool.isRequired,
     highlightedLayer: PropTypes.object,
