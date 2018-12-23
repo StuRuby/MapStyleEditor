@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LayerIcon } from './icons';
 
 
 function groupFeaturesBySourceLayer(features) {
@@ -24,18 +25,39 @@ function groupFeaturesBySourceLayer(features) {
 
 export default function FeatureLayerPopup(props) {
     const sources = groupFeaturesBySourceLayer(props.features);
-
+    const iconStyle = {
+        width: 14,
+        height: 14,
+        paddingRight: 3
+    };
     const items = Object.keys(sources).map(vectorLayerId => {
-        const layers = sources[vectorLayerId].map((feature,idx)=>
+        const layers = sources[vectorLayerId].map((feature, idx) =>
             <label
                 key={idx}
                 className='maputnik-popup-layer'
-                onClick = { props.onLayerSelect.bind(null,feature.layer.id) }
+                onClick={props.onLayerSelect.bind(null, feature.layer.id)}
             >
-
+                <LayerIcon
+                    type={feature.layer.type}
+                    style={iconStyle}
+                />
+                {feature.layer.id}
+                {feature.counter && <span> ×  {feature.counter}</span>}
             </label>
         );
+        return (
+            <div key={vectorLayerId}>
+                <div className='maputnik-popup-layer-id'>{vectorLayerId}</div>
+                {layers}
+            </div>
+        );
     });
+
+    return (
+        <div className='maputnik-feature-layer-popup'>
+            {items}
+        </div>
+    );
 }
 
 FeatureLayerPopup.propTypes = {
