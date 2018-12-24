@@ -9,16 +9,20 @@ import ZoomControl from '../libs/zoomControl';
 import Color from 'color';
 import colors from 'mapbox-gl-inspect/lib/colors';
 import FeatureLayerPopup from '../components/FeatureLayerPopup';
+import FeaturePropertyPopup from '../components/FeaturePropertyPopup';
 import tokens from '../mock/tokens.js';
 import { colorHighlightedLayer } from '../libs/highlight';
 import style from '../libs/style';
 import LayerWatcher from '../libs/layerWatcher';
+import '../styles/mapbox-gl.css';
+import '../styles/awesome-mapbox-gl.css';
+// import '../libs/mapbox-rtl';
 
 const IS_SUPPORTED = MapboxGl.supported();
 
 function renderPropertyPopup(features) {
     const node = document.createElement('div');
-    ReactDOM.render(<FeatureLayerPopup features={features} />, node);
+    ReactDOM.render(<FeaturePropertyPopup features={features} />, node);
     return node.innerHTML;
 }
 

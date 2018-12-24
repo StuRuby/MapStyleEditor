@@ -45,3 +45,37 @@ function renderFeature(feature) {
         </div>
     );
 }
+
+
+function removeDuplicateFeatures(features) {
+    let uniqueFeatures = [];
+    features.map(feature => {
+        const featureIndex = uniqueFeatures.findIndex(f =>
+            feature.layer['source-layer'] === f.layer['source-layer'] && JSON.stringify(feature.properties) === JSON.stringify(f.properties)
+        );
+
+        if (featureIndex === -1) {
+            uniqueFeatures.push(feature);
+        } else {
+            if (uniqueFeatures[featureIndex].hasOwnProperty('counter')) {
+                uniqueFeatures[featureIndex].inspectModeCounter++;
+            } else {
+                uniqueFeatures[featureIndex].inspectModeCounter = 2;
+            }
+        }
+    });
+    return uniqueFeatures;
+}
+
+export default function FeaturePropertyPopup(props) {
+    const features = removeDuplicateFeatures(props.features);
+    return (
+        <div className='maputnik-feature-property-popup'>
+            {features.map(renderFeature)}
+        </div>
+    );
+}
+
+FeaturePropertyPopup.propTypes = {
+    features: PropTypes.array
+};
