@@ -40,8 +40,8 @@ function renderFeature(feature) {
                     value={feature.geometry.type}
                     style={{ backgroundColor: 'transparent' }}
                 />
-                {renderProperties(feature)}
             </InputBlock>
+            {renderProperties(feature)}
         </div>
     );
 }
