@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'react-autobind';
-import Modal from '../../components/modals/Modal';
-import LayerIdBlock from '../../components/layers/LayerIdBlock';
-import LayerTypeBlock from '../../components/layers/LayerTypeBlock';
-import LayerSourceBlock from '../../components/layers/LayerSourceBlock';
-import LayerSourceLayerBlock from '../../components/layers/LayerSourceLayerBlock';
-import Button from '../../components/Button';
+import Modal from './Modal';
+import { LayerIdBlock, LayerTypeBlock, LayerSourceBlock, LayerSourceLayerBlock } from '../layers';
+import Button from '../Button';
 
 export default class AddModal extends Component {
     constructor(props) {

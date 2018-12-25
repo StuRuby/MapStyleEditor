@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../../components/modals/Modal';
+import Modal from './Modal';
 import FileReaderInput from 'react-file-reader-input';
 import autobind from 'react-autobind';
 import { connect } from 'react-redux';
@@ -41,7 +41,7 @@ class OpenModal extends React.Component {
                 data-wd-key='open-modal'
                 isOpen={props.isOpen}
                 onOpenToggle={props.toggleModalOpen}
-                title='加载样式'
+                title='加载样弝'
             >
                 <section className='maputnik-modal-section' >
                     <h2>Upload Style</h2>

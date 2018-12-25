@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SourceTypeEditor from '../../SourceTypeEditor';
-import Button from '../Button';
+import Button from '../../Button';
 import { MdDelete } from 'react-icons/md';
 
 function editorMode(source) {

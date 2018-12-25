@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '../Button';
-import style from '../../libs/style';
-import { StringInput, InputBlock, SelectInput } from '../input';
-import SourceTypeEditor from '../SourceTypeEditor';
+import Button from '../../Button';
+import style from '../../../libs/style';
+import { StringInput, InputBlock, SelectInput } from '../../input';
+import SourceTypeEditor from '../../SourceTypeEditor';
 import { latest } from '@mapbox/mapbox-gl-style-spec';
 
 export default function AddSource(props) {
@@ -24,7 +24,7 @@ export default function AddSource(props) {
             case 'geojson':
                 return { type: 'geojson', data, };
             case 'tilejson_vector':
-                return { type: 'vector', url, }
+                return { type: 'vector', url, };
             case 'tilexyz_vector':
                 return { type: 'vector', tiles, minZoom, maxZoom };
             case 'tilejson_raster':

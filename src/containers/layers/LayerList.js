@@ -6,7 +6,7 @@ import { SortableContainer, arrayMove } from 'react-sortable-hoc';
 import LayerListGroup from '../../components/layers/LayerListGroup';
 import { connect } from 'react-redux';
 import LayerListItem from '../../components/layers/LayerListItem';
-import AddModal from '../modals/AddModal';
+import { AddModal } from '../../components/modals';
 import clamp from 'lodash.clamp';
 
 

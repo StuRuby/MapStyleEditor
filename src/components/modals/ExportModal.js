@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import Modal from '../../components/modals/Modal';
+import React from 'react';
+import PropTypes from 'prop-types';
+import Modal from './Modal';
 import { InputBlock, StringInput, CheckBoxInput } from '../input';
 import Button from '../Button';
 import { MdFileDownload } from 'react-icons/md';
