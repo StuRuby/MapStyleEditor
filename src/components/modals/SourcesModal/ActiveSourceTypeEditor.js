@@ -45,3 +45,10 @@ export default function ActiveSourceTypeEditor(props) {
         </div>
     );
 }
+
+ActiveSourceTypeEditor.propTypes = {
+    sourceId: PropTypes.string.isRequired,
+    source: PropTypes.object.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+};

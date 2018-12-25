@@ -87,3 +87,7 @@ export default function AddSource(props) {
         </div>
     );
 }
+
+AddSource.propTypes = {
+    onAdd: PropTypes.func.isRequired,
+};
