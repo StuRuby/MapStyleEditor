@@ -7,8 +7,6 @@ import LayerList from './containers/layers/LayerList';
 import LayerEditor from './containers/layers/LayerEditor';
 import Map from './containers/Map';
 
-
-
 function App() {
     const toolbar = <ToolsBar />;
     const modals = (
@@ -35,6 +33,5 @@ function App() {
         />
     );
 }
-
 
 export default App;
