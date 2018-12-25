@@ -1,27 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SourceTypeEditor from '../../SourceTypeEditor';
 import Button from '../Button';
-import { MdAddCircleOutline, MdDelete } from 'react-icons/md';
-
-
-
-function PublicSource(props) {
-    return (
-        <div className='maputnik-public-source'>
-            <Button
-                className='maputnik-public-source-select'
-                onClick={props.onSelect.bind(null, props.id)}
-            >
-                <div className='maputnik-public-source-info'>
-                    <p className='maputnik-public-source-name'>{props.title}</p>
-                    <p className='maputnik-public-source-id'>#{props.id}</p>
-                </div>
-                <span className='maputnik-space' />
-                <MdAddCircleOutline />
-            </Button>
-        </div>
-    );
-}
+import { MdDelete } from 'react-icons/md';
 
 function editorMode(source) {
     if (source.type === 'raster') {
@@ -40,7 +21,7 @@ function editorMode(source) {
     return null;
 }
 
-function ActiveSourceTypeEditor(props) {
+export default function ActiveSourceTypeEditor(props) {
     return (
         <div className='maputnik-active-source-type-editor'>
             <div className='maputnik-active-source-type-editor-header'>
@@ -54,23 +35,13 @@ function ActiveSourceTypeEditor(props) {
                     <MdDelete />
                 </Button>
             </div>
+            <div className='maputnik-active-source-type-editor-content'>
+                <SourceTypeEditor
+                    onChange={props.onChange}
+                    mode={editorMode(props.source)}
+                    source={props.source}
+                />
+            </div>
         </div>
-    );
-}
-
-
-PublicSource.propTypes = {
-    id: PropTypes.string.isRequired,
-    type: propTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    onSelect: PropTypes.func.isRequired,
-};
-
-
-export default function SourcesModal(props) {
-    return (
-        <Modal>
-            <div>This is a SourcesModal</div>
-        </Modal>
     );
 }
