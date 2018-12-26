@@ -1,10 +1,10 @@
 import React from 'react';
 import AppLayout from './layout/AppLayout';
-import ToolsBar from './containers/toolsbar';
+import ToolsBar from './containers/ToolBar';
 // import { AddModal, ExportModal, LoadingModal, OpenModal, SettingModal, SourcesModal } from './containers/modals';
 import { ShortcutsModal } from './components/modals';
-import LayerList from './containers/layers/LayerList';
-import LayerEditor from './containers/layers/LayerEditor';
+import LayerList from './containers/LayerList';
+import LayerEditor from './containers/LayerEditor';
 import Map from './containers/Map';
 
 function App() {
