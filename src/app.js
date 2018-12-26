@@ -1,25 +1,14 @@
 import React from 'react';
 import AppLayout from './layout/AppLayout';
 import ToolsBar from './containers/ToolBar';
-// import { AddModal, ExportModal, LoadingModal, OpenModal, SettingModal, SourcesModal } from './containers/modals';
-import { ShortcutsModal } from './components/modals';
+import { Modals } from './containers/Modals';
 import LayerList from './containers/LayerList';
 import LayerEditor from './containers/LayerEditor';
 import Map from './containers/Map';
 
 function App() {
     const toolbar = <ToolsBar />;
-    const modals = (
-        <div>
-            <ShortcutsModal />
-            {/* <AddModal /> */}
-            {/* <ExportModal />
-            <LoadingModal /> */}
-            {/* <OpenModal /> */}
-            {/* <SettingModal />
-            <SourcesModal /> */}
-        </div>
-    );
+    const modals = <Modals />;
     const layerList = <LayerList />;
     const layerEditor = <LayerEditor />;
     const map = <Map />;
