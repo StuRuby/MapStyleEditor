@@ -15,13 +15,13 @@ import {
     MinZoomBlock,
     MaxZoomBlock,
     CommentBlock,
-    JSONEditor,
-} from '../../components/layers';
-import style from '../../libs/style';
-import { changeType, changeProperty } from '../../libs/layer';
-import FilterEditor from '../../components/filter/FilterEditor';
-import { PropertyGroup } from '../../components/fields';
-import layout from '../../mock/layout';
+    JSONEditor
+} from '../components/layers';
+import style from '../libs/style';
+import { changeType, changeProperty } from '../libs/layer';
+import FilterEditor from '../components/filter/FilterEditor';
+import { PropertyGroup } from '../components/fields';
+import layout from '../mock/layout';
 
 function layoutGroups(layerType) {
     const layerGroup = {
@@ -36,7 +36,9 @@ function layoutGroups(layerType) {
         title: 'JSON Editor',
         type: 'jsoneditor'
     };
-    return [layerGroup, filterGroup].concat(layout[layerType].groups).concat([editorGroup]);
+    return [layerGroup, filterGroup]
+        .concat(layout[layerType].groups)
+        .concat([editorGroup]);
 }
 
 class LayerEditor extends Component {
@@ -86,7 +88,12 @@ class LayerEditor extends Component {
 
     onLayerPropertyChange(group, property, newValue) {
         const { selectedLayer, onLayerChanged } = this.props;
-        const _layers = changeProperty(selectedLayer, group, property, newValue);
+        const _layers = changeProperty(
+            selectedLayer,
+            group,
+            property,
+            newValue
+        );
         onLayerChanged(_layers);
     }
 
@@ -124,23 +131,23 @@ class LayerEditor extends Component {
     }
 
     renderMenuItemsList(items) {
-        return Object.keys(items).map((id, idx) =>
-            <li key={id} >
-                <MenuItem
-                    value={id}
-                    className='more-menu__menu__item'
-                >
+        return Object.keys(items).map((id, idx) => (
+            <li key={id}>
+                <MenuItem value={id} className="more-menu__menu__item">
                     {items[id]['text']}
                 </MenuItem>
             </li>
-        );
+        ));
     }
 
     renderLayerGroups() {
         const { selectedLayer } = this.props;
         const layerType = selectedLayer.type;
         const groups = layoutGroups(layerType)
-            .filter(group => !(layerType === 'background' && group.type === 'source'))
+            .filter(
+                group =>
+                    !(layerType === 'background' && group.type === 'source')
+            )
             .map(group => {
                 return (
                     <LayerEditorGroup
@@ -148,7 +155,10 @@ class LayerEditor extends Component {
                         key={group.title}
                         title={group.title}
                         isActive={this.state.editorGroups[group.title]}
-                        onActiveToggle={this.onGroupToggle.bind(this, group.title)}
+                        onActiveToggle={this.onGroupToggle.bind(
+                            this,
+                            group.title
+                        )}
                     >
                         {this.renderGroupTypes(group.type, group.fields)}
                     </LayerEditorGroup>
@@ -159,7 +169,13 @@ class LayerEditor extends Component {
 
     renderGroupTypes(type, fields) {
         let comment = '';
-        const { selectedLayer, sources, vectorLayers, spec, onLayerChanged } = this.props;
+        const {
+            selectedLayer,
+            sources,
+            vectorLayers,
+            spec,
+            onLayerChanged
+        } = this.props;
         if (selectedLayer.metadata) {
             comment = selectedLayer.metadata['maputnik:comment'];
         }
@@ -173,51 +189,92 @@ class LayerEditor extends Component {
                     <div>
                         <LayerIdBlock
                             value={selectedLayer.id}
-                            wdKey='layer-editor.layer-id'
+                            wdKey="layer-editor.layer-id"
                             onChange={this.onLayerIdChange}
                         />
                         <LayerTypeBlock
                             value={selectedLayer.type}
                             onChange={this.onLayerTypeChange}
                         />
-                        {
-                            selectedLayer.type !== 'background' &&
+                        {selectedLayer.type !== 'background' && (
                             <LayerSourceBlock
                                 sourceIds={Object.keys(this.props.sources)}
                                 value={selectedLayer['source']}
-                                onChange={(value) => this.onLayerPropertyChange(null, 'source', value)}
+                                onChange={value =>
+                                    this.onLayerPropertyChange(
+                                        null,
+                                        'source',
+                                        value
+                                    )
+                                }
                             />
-                        }
-                        {
-                            ['background', 'raster', 'hillshade', 'heatmap'].indexOf(selectedLayer.type) < 0 &&
+                        )}
+                        {[
+                            'background',
+                            'raster',
+                            'hillshade',
+                            'heatmap'
+                        ].indexOf(selectedLayer.type) < 0 && (
                             <LayerSourceLayerBlock
                                 sourceLayerIds={sourceLayerIds}
                                 value={selectedLayer['source-layer']}
-                                onChange={(value) => this.onLayerPropertyChange(null, 'source-layer', value)}
+                                onChange={value =>
+                                    this.onLayerPropertyChange(
+                                        null,
+                                        'source-layer',
+                                        value
+                                    )
+                                }
                             />
-                        }
+                        )}
                         <MinZoomBlock
                             value={selectedLayer.minzoom}
-                            onChange={value => this.onLayerPropertyChange(null, 'minzoom', value)}
+                            onChange={value =>
+                                this.onLayerPropertyChange(
+                                    null,
+                                    'minzoom',
+                                    value
+                                )
+                            }
                         />
                         <MaxZoomBlock
                             value={selectedLayer.maxzoom}
-                            onChange={value => this.onLayerPropertyChange(null, 'maxzoom', value)}
+                            onChange={value =>
+                                this.onLayerPropertyChange(
+                                    null,
+                                    'maxzoom',
+                                    value
+                                )
+                            }
                         />
                         <CommentBlock
                             value={comment}
-                            onChange={value => this.onLayerPropertyChange('metadata', 'maputnik:comment', value == '' ? undefined : value)}
+                            onChange={value =>
+                                this.onLayerPropertyChange(
+                                    'metadata',
+                                    'maputnik:comment',
+                                    value == '' ? undefined : value
+                                )
+                            }
                         />
                     </div>
                 );
             case 'filter':
                 return (
                     <div>
-                        <div className='maputnik-filter-editor-wrapper'>
+                        <div className="maputnik-filter-editor-wrapper">
                             <FilterEditor
                                 filter={selectedLayer.filter}
-                                properties={vectorLayers[selectedLayer['source-layer']]}
-                                onChange={value => this.onLayerPropertyChange(null, 'filter', value)}
+                                properties={
+                                    vectorLayers[selectedLayer['source-layer']]
+                                }
+                                onChange={value =>
+                                    this.onLayerPropertyChange(
+                                        null,
+                                        'filter',
+                                        value
+                                    )
+                                }
                             />
                         </div>
                     </div>
@@ -276,23 +333,23 @@ class LayerEditor extends Component {
             items[id].handler();
         }
         return (
-            <div className='maputnik-layer-editor'>
+            <div className="maputnik-layer-editor">
                 <header>
-                    <div className='layer-header'>
-                        <h2 className='layer-header__title'>
-                            Layer:{selectedLayer.id}
+                    <div className="layer-header">
+                        <h2 className="layer-header__title">
+							Layer:{selectedLayer.id}
                         </h2>
-                        <div className='layer-header__info'>
+                        <div className="layer-header__info">
                             <Wrapper
-                                className='more-menu'
+                                className="more-menu"
                                 onSelection={handleSection}
                                 closeOnSelection={false}
                             >
-                                <Button className='more-menu__button' >
-                                    <MdMoreVert className='more-menu__button__svg' />
+                                <Button className="more-menu__button">
+                                    <MdMoreVert className="more-menu__button__svg" />
                                 </Button>
                                 <Menu>
-                                    <ul className='more-menu__menu' >
+                                    <ul className="more-menu__menu">
                                         {this.renderMenuItemsList(items)}
                                     </ul>
                                 </Menu>
@@ -318,29 +375,38 @@ LayerEditor.propTypes = {
     onLayerDestroy: PropTypes.func,
     onLayerCopy: PropTypes.func,
     onLayerVisibilityToggle: PropTypes.func,
-    setSelectedLayerIndex: PropTypes.func,
+    setSelectedLayerIndex: PropTypes.func
 };
 
-const mapState = ({ mapStyle, selectedLayerIndex, sources, vectorLayers, spec }) => ({
-    layers: mapStyle.layers,
+const mapState = ({
+    mapStyle,
     selectedLayerIndex,
-    selectedLayer: mapStyle.layers.length > 0 ? mapStyle.layers[selectedLayerIndex] : null,
     sources,
     vectorLayers,
-    spec,
+    spec
+}) => ({
+    layers: mapStyle.layers,
+    selectedLayerIndex,
+    selectedLayer:
+		mapStyle.layers.length > 0 ? mapStyle.layers[selectedLayerIndex] : null,
+    sources,
+    vectorLayers,
+    spec
 });
-
 
 const mapDispatch = ({
     selectedLayerIndex: { setLayerSelect, setSelectedLayerIndex },
     mapStyle: { destoryLayer, copyLayer, toggleLayerVisibility, changeLayer }
 }) => ({
     onLayerSelect: (layers, idx) => setLayerSelect(layers, idx),
-    onLayerDestroy: (layerId) => destoryLayer(layerId),
-    onLayerCopy: (layerId) => copyLayer(layerId),
-    onLayerVisibilityToggle: (layerId) => toggleLayerVisibility(layerId),
-    onLayerChanged: (layer) => changeLayer(layer),
-    setSelectedLayerIndex: (index) => setSelectedLayerIndex(index),
+    onLayerDestroy: layerId => destoryLayer(layerId),
+    onLayerCopy: layerId => copyLayer(layerId),
+    onLayerVisibilityToggle: layerId => toggleLayerVisibility(layerId),
+    onLayerChanged: layer => changeLayer(layer),
+    setSelectedLayerIndex: index => setSelectedLayerIndex(index)
 });
 
-export default connect(mapState, mapDispatch)(LayerEditor);
+export default connect(
+    mapState,
+    mapDispatch
+)(LayerEditor);
