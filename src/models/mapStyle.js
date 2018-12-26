@@ -2,9 +2,9 @@ import style from '../libs/style';
 import cloneDeep from 'lodash.clonedeep';
 
 const styleJson = {
-    'version': 8,
-    'name': 'Klokantech Basic',
-    'metadata': {
+    version: 8,
+    name: 'Klokantech Basic',
+    metadata: {
         'mapbox:autocomposite': false,
         'mapbox:type': 'template',
         'maputnik:renderer': 'mbgljs',
@@ -12,114 +12,86 @@ const styleJson = {
         'openmaptiles:mapbox:owner': 'openmaptiles',
         'openmaptiles:mapbox:source:url': 'mapbox://openmaptiles.4qljc88t'
     },
-    'sources': {
-        'openmaptiles': {
-            'type': 'vector',
-            'url': 'https://free.tilehosting.com/data/v3.json?key={key}'
+    sources: {
+        openmaptiles: {
+            type: 'vector',
+            url: 'https://free.tilehosting.com/data/v3.json?key={key}'
         }
     },
-    'sprite': 'https://openmaptiles.github.io/klokantech-basic-gl-style/sprite',
-    'glyphs': 'https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key={key}',
-    'layers': [
+    sprite: 'https://openmaptiles.github.io/klokantech-basic-gl-style/sprite',
+    glyphs:
+		'https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key={key}',
+    layers: [
         {
-            'id': 'background',
-            'type': 'background',
-            'paint': {
+            id: 'background',
+            type: 'background',
+            paint: {
                 'background-color': 'hsl(47, 26%, 88%)'
             }
         },
         {
-            'id': 'landuse-residential',
-            'type': 'fill',
-            'source': 'openmaptiles',
+            id: 'landuse-residential',
+            type: 'fill',
+            source: 'openmaptiles',
             'source-layer': 'landuse',
-            'filter': [
+            filter: [
                 'all',
-                [
-                    '==',
-                    '$type',
-                    'Polygon'
-                ],
-                [
-                    '==',
-                    'class',
-                    'residential'
-                ]
+                ['==', '$type', 'Polygon'],
+                ['==', 'class', 'residential']
             ],
-            'layout': {
-                'visibility': 'visible'
+            layout: {
+                visibility: 'visible'
             },
-            'paint': {
+            paint: {
                 'fill-color': 'hsl(47, 13%, 86%)',
                 'fill-opacity': 0.7
             }
         },
         {
-            'id': 'landcover_grass',
-            'type': 'fill',
-            'source': 'openmaptiles',
+            id: 'landcover_grass',
+            type: 'fill',
+            source: 'openmaptiles',
             'source-layer': 'landcover',
-            'filter': [
-                '==',
-                'class',
-                'grass'
-            ],
-            'paint': {
+            filter: ['==', 'class', 'grass'],
+            paint: {
                 'fill-color': 'hsl(82, 46%, 72%)',
                 'fill-opacity': 0.45
             }
         },
         {
-            'id': 'park',
-            'type': 'fill',
-            'source': 'openmaptiles',
+            id: 'park',
+            type: 'fill',
+            source: 'openmaptiles',
             'source-layer': 'park',
-            'paint': {
+            paint: {
                 'fill-color': 'rgba(192, 216, 151, 0.53)',
                 'fill-opacity': 1
             }
         },
         {
-            'id': 'landcover_wood',
-            'type': 'fill',
-            'source': 'openmaptiles',
+            id: 'landcover_wood',
+            type: 'fill',
+            source: 'openmaptiles',
             'source-layer': 'landcover',
-            'filter': [
-                '==',
-                'class',
-                'wood'
-            ],
-            'paint': {
+            filter: ['==', 'class', 'wood'],
+            paint: {
                 'fill-color': 'hsl(82, 46%, 72%)',
                 'fill-opacity': {
-                    'base': 1,
-                    'stops': [
-                        [
-                            8,
-                            0.6
-                        ],
-                        [
-                            22,
-                            1
-                        ]
-                    ]
+                    base: 1,
+                    stops: [[8, 0.6], [22, 1]]
                 }
             }
         },
         {
-            'id': 'water',
-            'type': 'fill',
-            'source': 'openmaptiles',
+            id: 'water',
+            type: 'fill',
+            source: 'openmaptiles',
             'source-layer': 'water',
-            'filter': [
-                '==',
-                '$type',
-                'Polygon'
-            ],
-            'paint': {
+            filter: ['==', '$type', 'Polygon'],
+            paint: {
                 'fill-color': 'hsl(205, 56%, 73%)'
             }
-        },
+        }
         // {
         //     'id': 'landcover-ice-shelf',
         //     'type': 'fill',
@@ -1680,19 +1652,22 @@ const styleJson = {
         //     }
         // }
     ],
-    'id': 'klokantech-basic'
+    id: 'klokantech-basic'
 };
 
 export default {
     state: styleJson,
     reducers: {
+        setMapStyle(state, payload) {
+            return { ...payload };
+        },
         changeLayer(state, layer) {
             const layers = state.layers.slice();
             const idx = style.indexOfLayer(layers, layer.id);
             layers[idx] = layer;
             return {
                 ...state,
-                layers,
+                layers
             };
         },
         setChangedLayers(state, changedLayers) {
@@ -1730,7 +1705,8 @@ export default {
             const idx = style.indexOfLayer(changedLayers, layerId);
             const layer = { ...changedLayers[idx] };
             const changedLayout = 'layout' in layer ? { ...layer.layout } : {};
-            changedLayout.visibility = changedLayout.visibility === 'none' ? 'visible' : 'none';
+            changedLayout.visibility =
+				changedLayout.visibility === 'none' ? 'visible' : 'none';
 
             layer.layout = changedLayout;
             changedLayers[idx] = layer;
@@ -1738,6 +1714,6 @@ export default {
                 ...state,
                 layers: changedLayers
             };
-        },
+        }
     }
 };
