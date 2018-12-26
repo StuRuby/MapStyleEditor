@@ -21,12 +21,12 @@ export default {
     effects: {
         async updateFonts(state, metadata = {}, url) {
             const accessToken =
-                metadata['maputnik:openmaptiles_access_token'] ||
-                tokens.openmaptiles;
+				metadata['maputnik:openmaptiles_access_token'] ||
+				tokens.openmaptiles;
             const glyphUrl =
-                typeof url === 'string'
-                    ? url.replace('{key}', accessToken)
-                    : url;
+				typeof url === 'string'
+				    ? url.replace('{key}', accessToken)
+				    : url;
             if (!glyphUrl) {
                 const _state = updateRootSpec(state, 'glyphs', []);
                 return { ..._state };
@@ -52,7 +52,7 @@ export default {
                 const _state = updateRootSpec(state, 'glyphs', []);
                 return { ..._state };
             }
-        }
+        },
 
         async updateIcons(state, url) {
             if (!url) {

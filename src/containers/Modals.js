@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { latest, validate } from '@mapbox/mapbox-gl-style-spec';
 import {
     Modal,
     SourcesModal,
@@ -8,11 +9,20 @@ import {
     SettingModal,
     ShortcutsModal
 } from '../components/modals';
-import { latest, validate } from '@mapbox/mapbox-gl-style-spec';
 
-export default function Modals(props) {
-    const { mapStyle, modalsOpen, errors, toggleModal, updateFonts, updateIcons, setMapStyle, fetchSources } = props;
-    const onStyleChanged = (newStyle) => {
+function Modals(props) {
+    const {
+        mapStyle,
+        modalsOpen,
+        errors,
+        toggleModal,
+        updateFonts,
+        updateIcons,
+        setMapStyle,
+        fetchSources
+    } = props;
+
+    const onStyleChanged = newStyle => {
         const _errors = validate(newStyle, latest);
         if (_errors.length === 0) {
             if (newStyle.length !== mapStyle.glyphs) {
@@ -48,13 +58,24 @@ export default function Modals(props) {
                 onOpenToggle={toggleModal.bind(null, 'settings')}
             />
             <ShortcutsModal
-                ref={el => this.shortCuts = el}
+                ref={el => (this.shortCuts = el)}
                 isOpen={modalsOpen['shortcuts']}
                 onOpenToggle={toggleModal.bind('shortcuts')}
             />
         </div>
     );
 }
+
+Modals.propTypes = {
+    mapStyle: PropTypes.object.isRequired,
+    modalsOpen: PropTypes.object.isRequired,
+    errors: PropTypes.array,
+    toggleModal: PropTypes.func,
+    setMapStyle: PropTypes.func,
+    fetchSources: PropTypes.func,
+    updateFonts: PropTypes.func,
+    updateIcons: PropTypes.func
+};
 
 const mapState = ({ mapStyle, modalsOpen, errors }) => ({
     mapStyle,
@@ -68,12 +89,14 @@ const mapDispatch = ({
     sources: { loadSources },
     spec: { updateFonts, updateIcons }
 }) => ({
-    toggleModal: (key) => setModalOpen(key),
-    setMapStyle: (mapStyle) => setMapStyle(mapStyle),
+    toggleModal: key => setModalOpen(key),
+    setMapStyle: mapStyle => setMapStyle(mapStyle),
     fetchSources: () => loadSources(),
     updateFonts: (metadata, url) => updateFonts(metadata, url),
-    updateIcons: (url) => updateIcons(url),
+    updateIcons: url => updateIcons(url)
 });
 
-
-export default connect(mapState, mapDispatch)(Modals);
+export default connect(
+    mapState,
+    mapDispatch
+)(Modals);
