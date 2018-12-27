@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { latest, validate } from '@mapbox/mapbox-gl-style-spec';
@@ -11,6 +11,7 @@ import {
 } from '../components/modals';
 
 function Modals(props) {
+    const shortCuts = useRef(null);
     const {
         mapStyle,
         modalsOpen,
@@ -58,7 +59,7 @@ function Modals(props) {
                 onOpenToggle={toggleModal.bind(null, 'settings')}
             />
             <ShortcutsModal
-                ref={el => (this.shortCuts = el)}
+                // ref={shortCuts}
                 isOpen={modalsOpen['shortcuts']}
                 onOpenToggle={toggleModal.bind('shortcuts')}
             />

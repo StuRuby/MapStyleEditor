@@ -20,15 +20,24 @@ export default function SourcesModal(props) {
             <ActiveSourceTypeEditor
                 key={sourceId}
                 sourceId={sourceId}
-                type={source.type}
-                title={source.title}
-                onSelect={props.onStyleChanged.bind(null, addSource(mapStyle, sourceId), stripTitle(source))}
+                source={source}
+                onChange={src =>
+                    props.onStyleChanged.bind(
+                        null,
+                        changeSource(mapStyle, sourceId, src)
+                    )
+                }
+                onDelete={() =>
+                    props.onStyleChanged.bind(
+                        null,
+                        deleteSource(mapStyle, sourceId)
+                    )
+                }
             />
         );
     });
 
-    const tilesetOptions = Object
-        .keys(publicSources)
+    const tilesetOptions = Object.keys(publicSources)
         .filter(sourceId => !(sourceId in mapStyle.sources))
         .map(sourceId => {
             const source = publicSources[sourceId];
@@ -38,7 +47,11 @@ export default function SourcesModal(props) {
                     id={sourceId}
                     type={source.type}
                     title={source.title}
-                    onSelect={props.onStyleChanged.bind(null, addSource(mapStyle, sourceId), stripTitle(source))}
+                    onSelect={props.onStyleChanged.bind(
+                        null,
+                        addSource(mapStyle, sourceId),
+                        stripTitle(source)
+                    )}
                 />
             );
         });
@@ -46,24 +59,31 @@ export default function SourcesModal(props) {
         <Modal
             isOpen={props.isOpen}
             onOpenToggle={props.onOpenToggle}
-            title='Sources'
+            title="Sources"
         >
-            <div className='maputnik-modal-section'>
+            <div className="maputnik-modal-section">
                 <h4>可用数据源</h4>
                 {activeSources}
             </div>
-            <div className='maputnik-modal-section'>
+            <div className="maputnik-modal-section">
                 <h4>选择数据源</h4>
                 <p>选择数据源进行添加</p>
-                <div className='maputnik-public-sources' style={{ maxWidth: 500 }} >
+                <div
+                    className="maputnik-public-sources"
+                    style={{ maxWidth: 500 }}
+                >
                     {tilesetOptions}
                 </div>
             </div>
-            <div className='maputnik-modal-section'>
+            <div className="maputnik-modal-section">
                 <h4>添加新数据源</h4>
                 <p>添加新的数据源</p>
                 <AddSource
-                    onAdd={(sourceId, source) => props.onStyleChanged(addSource(mapStyle, sourceId, source))}
+                    onAdd={(sourceId, source) =>
+                        props.onStyleChanged(
+                            addSource(mapStyle, sourceId, source)
+                        )
+                    }
                 />
             </div>
         </Modal>
@@ -74,5 +94,5 @@ SourcesModal.propTypes = {
     mapStyle: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onOpenToggle: PropTypes.func.isRequired,
-    onStyleChanged: PropTypes.func.isRequired,
+    onStyleChanged: PropTypes.func.isRequired
 };

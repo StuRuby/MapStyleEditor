@@ -36,24 +36,22 @@ const HELP = [
 export default function ShortcutsModal(props) {
     return (
         <Modal
-            data-wd-key='shortcuts-modal'
-            isOpen={props.onOpenToggle}
+            data-wd-key="shortcuts-modal"
+            isOpen={props.isOpen}
             onOpenToggle={props.onOpenToggle}
-            title='快捷键'
+            title="快捷键"
         >
-            <div className='maputnik-modal-section maputnik-modal-shortcuts'>
+            <div className="maputnik-modal-section maputnik-modal-shortcuts">
                 <p>
-                    按<code>ESC</code>取消选中
+					按<code>ESC</code>取消选中
                 </p>
                 <ul>
-                    {
-                        HELP.map(item =>
-                            <li key={item.key} >
-                                <code>{item.key}</code>
-                                {item.text}
-                            </li>
-                        )
-                    }
+                    {HELP.map(item => (
+                        <li key={item.key}>
+                            <code>{item.key}</code>
+                            {item.text}
+                        </li>
+                    ))}
                 </ul>
             </div>
         </Modal>
@@ -62,5 +60,5 @@ export default function ShortcutsModal(props) {
 
 ShortcutsModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    onOpenToggle: PropTypes.func.isRequired,
+    onOpenToggle: PropTypes.func.isRequired
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import AppLayout from './layout/AppLayout';
 import ToolsBar from './containers/ToolBar';
-import { Modals } from './containers/Modals';
+import Modals from './containers/Modals';
 import LayerList from './containers/LayerList';
 import LayerEditor from './containers/LayerEditor';
 import Map from './containers/Map';
