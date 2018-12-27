@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Button from '../../components/Button';
 import { MdFileUpload } from 'react-icons/md';
 import style from '../../libs/style';
+// import LoadingModal from './LoadingModal';
 //TODO:
 class OpenModal extends React.Component {
     constructor(props) {
@@ -60,15 +61,15 @@ OpenModal.propTypes = {
     toggleModalOpen: PropTypes.func
 };
 
-const mapState = ({ modalsOpen }) => ({
-    isOpen: modalsOpen['open']
-});
+// const mapState = ({ modalsOpen }) => ({
+//     isOpen: modalsOpen['open']
+// });
 
-const mapDispatch = ({ modalsOpen: { setModalOpen } }) => ({
-    toggleModalOpen: () => setModalOpen('open')
-});
+// const mapDispatch = ({ modalsOpen: { setModalOpen } }) => ({
+//     toggleModalOpen: () => setModalOpen('open')
+// });
 
-export default connect(
-    mapState,
-    mapDispatch
-)(OpenModal);
+// export default connect(
+//     mapState,
+//     mapDispatch
+// )(OpenModal);
