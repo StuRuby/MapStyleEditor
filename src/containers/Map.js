@@ -28,10 +28,10 @@ function renderPropertyPopup(features) {
 
 function buildInspectStyle(originalStyle, coloredLayers, highlightedLayer) {
     const backgroundLayer = {
-        'id': 'background',
-        'type': 'background',
-        'paint': {
-            'background-color': '#1c1f24',
+        id: 'background',
+        type: 'background',
+        paint: {
+            'background-color': '#1c1f24'
         }
     };
 
@@ -65,10 +65,10 @@ class Map extends Component {
             inspect: null,
             isPopupOpen: false,
             popupX: 0,
-            popupY: 0,
+            popupY: 0
         };
         this.layerWatcher = new LayerWatcher({
-            onVectorLayersChange: this.props.onVectorLayersChange,
+            onVectorLayersChange: this.props.onVectorLayersChange
         });
     }
 
@@ -76,7 +76,8 @@ class Map extends Component {
         if (!IS_SUPPORTED) return;
         if (!this.state.map) return;
         const metaData = props.mapStyle.metadata || {};
-        MapboxGl.accessToken = metaData['maputnik:mapbox_access_token'] || tokens.mapbox;
+        MapboxGl.accessToken =
+			metaData['maputnik:mapbox_access_token'] || tokens.mapbox;
         if (!props.inspectModeEnabled) {
             this.state.map.setStyle(props.mapStyle, { diff: true });
         }
@@ -97,7 +98,7 @@ class Map extends Component {
         };
 
         const map = new MapboxGl.Map(mapOpts);
-        const zoom = new ZoomControl;
+        const zoom = new ZoomControl();
         map.addControl(zoom, 'top-right');
 
         const nav = new MapboxGl.NavigationControl();
@@ -110,17 +111,27 @@ class Map extends Component {
             showInspectMapPopupOnHover: true,
             showInspectButton: false,
             blockHoverPopupOnClick: true,
-            assignLayerColor: (layerId, alpha) => Color(colors.brightColor(layerId, alpha)).desaturate(0.5).toString(),
-            buildInspectStyle: (originalMapStyle, coloredLayers) => buildInspectStyle(originalMapStyle, coloredLayers, this.props.highlightedLayer),
+            assignLayerColor: (layerId, alpha) =>
+                Color(colors.brightColor(layerId, alpha))
+                    .desaturate(0.5)
+                    .toString(),
+            buildInspectStyle: (originalMapStyle, coloredLayers) =>
+                buildInspectStyle(
+                    originalMapStyle,
+                    coloredLayers,
+                    this.props.highlightedLayer
+                ),
             renderPopup: features => {
                 if (this.props.inspectModeEnabled) {
                     return renderPropertyPopup(features);
                 } else {
                     const mountNode = document.createElement('div');
-                    ReactDOM.render(<FeatureLayerPopup
-                        features={features}
-                        onLayerSelect={this.props.onLayerSelect}
-                    />, mountNode
+                    ReactDOM.render(
+                        <FeatureLayerPopup
+                            features={features}
+                            onLayerSelect={this.props.onLayerSelect}
+                        />,
+                        mountNode
                     );
                 }
             }
@@ -146,13 +157,19 @@ class Map extends Component {
         }
     }
     render() {
-        return IS_SUPPORTED
-            ? <div className='maputnik-map__map' ref={x => this.container = x} ></div>
-            : <div className='maputnik-map maputnik-map--error'>
-                <div className='maputnik-map__error-message'>
-                    Error:Cannot load MapboxGL,WebGL is either unsupported or disabled
+        return IS_SUPPORTED ? (
+            <div
+                className="maputnik-map__map"
+                ref={x => (this.container = x)}
+            />
+        ) : (
+            <div className="maputnik-map maputnik-map--error">
+                <div className="maputnik-map__error-message">
+					Error:Cannot load MapboxGL,WebGL is either unsupported or
+					disabled
                 </div>
-            </div>;
+            </div>
+        );
     }
 }
 
@@ -167,24 +184,27 @@ Map.propTypes = {
 };
 
 Map.defaultProps = {
-    onLayerSelect: () => { },
+    onLayerSelect: () => {},
     options: {}
 };
 
 const mapState = ({ mapStyle, mapState, selectedLayerIndex }) => ({
     mapStyle: style.replaceAccessTokens(mapStyle, { allowFallback: true }),
     inspectModeEnabled: mapState === 'inspect',
-    highlightedLayer: mapStyle.layers[selectedLayerIndex],
+    highlightedLayer: mapStyle.layers[selectedLayerIndex]
 });
 
 const mapDispatch = ({
     selectedLayerIndex: { setLayerSelect, setSelectedLayerIndex },
     vectorLayers: { changeVectorLayers },
-    sources: { loadSources },
+    sources: { loadSources }
 }) => ({
     onLayerSelect: (layers, idx) => setLayerSelect(layers, idx),
-    onVectorLayersChange: (value) => changeVectorLayers(value),
-    loadSources,
+    onVectorLayersChange: value => changeVectorLayers(value),
+    loadSources
 });
 
-export default connect(mapState, mapDispatch)(Map);
+export default connect(
+    mapState,
+    mapDispatch
+)(Map);
