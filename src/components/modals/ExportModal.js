@@ -36,6 +36,7 @@ export default function ExportModal(props) {
             ? Slugify(props.mapStyle.name, { replacement: '_', lower: true })
             : props.mapStyle.id;
         saveAs(blob, exportName + '.json');
+        props.onOpenToggle(false);
     };
 
     const changeMetadataProperty = (property, value) => {
