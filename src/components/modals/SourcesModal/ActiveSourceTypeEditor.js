@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SourceTypeEditor from '../../SourceTypeEditor';
+// import SourceTypeEditor from '../../SourceTypeEditor';
 import Button from '../../Button';
 import { MdDelete } from 'react-icons/md';
 
@@ -23,24 +23,26 @@ function editorMode(source) {
 
 export default function ActiveSourceTypeEditor(props) {
     return (
-        <div className='maputnik-active-source-type-editor'>
-            <div className='maputnik-active-source-type-editor-header'>
-                <span className='maputnik-active-source-type-editor-header-id'>#{props.sourceId}</span>
-                <span className='maputnik-space' />
+        <div className="maputnik-active-source-type-editor">
+            <div className="maputnik-active-source-type-editor-header">
+                <span className="maputnik-active-source-type-editor-header-id">
+                    #{props.sourceId}
+                </span>
+                <span className="maputnik-space" />
                 <Button
-                    className='maputnik-active-source-type-editor-header-delete'
+                    className="maputnik-active-source-type-editor-header-delete"
                     onClick={props.onDelete.bind(props.sourceId)}
                     style={{ backgroundColor: 'transparent' }}
                 >
                     <MdDelete />
                 </Button>
             </div>
-            <div className='maputnik-active-source-type-editor-content'>
-                <SourceTypeEditor
+            <div className="maputnik-active-source-type-editor-content">
+                {/* <SourceTypeEditor
                     onChange={props.onChange}
                     mode={editorMode(props.source)}
                     source={props.source}
-                />
+                /> */}
             </div>
         </div>
     );
@@ -50,5 +52,5 @@ ActiveSourceTypeEditor.propTypes = {
     sourceId: PropTypes.string.isRequired,
     source: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
 };
