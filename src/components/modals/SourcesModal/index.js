@@ -59,7 +59,8 @@ export default function SourcesModal(props) {
                 <h4>可用数据源</h4>
                 {activeSources}
             </div>
-            <div className="maputnik-modal-section">
+            {/* //TODO: rebuilt the set tile sources */}
+            {/* <div className="maputnik-modal-section">
                 <h4>选择数据源</h4>
                 <p>选择数据源进行添加</p>
                 <div
@@ -68,7 +69,7 @@ export default function SourcesModal(props) {
                 >
                     {tilesetOptions}
                 </div>
-            </div>
+            </div> */}
             <div className="maputnik-modal-section">
                 <h4>添加新数据源</h4>
                 <p>添加新的数据源</p>
