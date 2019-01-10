@@ -22,16 +22,10 @@ export default function SourcesModal(props) {
                 sourceId={sourceId}
                 source={source}
                 onChange={src =>
-                    props.onStyleChanged.bind(
-                        null,
-                        changeSource(mapStyle, sourceId, src)
-                    )
+                    props.onStyleChanged(changeSource(mapStyle, sourceId, src))
                 }
                 onDelete={() =>
-                    props.onStyleChanged.bind(
-                        null,
-                        deleteSource(mapStyle, sourceId)
-                    )
+                    props.onStyleChanged(deleteSource(mapStyle, sourceId))
                 }
             />
         );
