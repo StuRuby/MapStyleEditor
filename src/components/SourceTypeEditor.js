@@ -1,4 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+    GeoJSONSourceEditor,
+    TileJSONSourceEditor,
+    TileURLSourceEditor,
+} from './editors';
 
 export default function SourceTypeEditor(props) {
     const commonProps = {
@@ -37,7 +43,7 @@ export default function SourceTypeEditor(props) {
                             }
                             value={
                                 props.source.encoding ||
-								latest.source_raster_dem.encoding.default
+                                latest.source_raster_dem.encoding.default
                             }
                         />
                     </InputBlock>
