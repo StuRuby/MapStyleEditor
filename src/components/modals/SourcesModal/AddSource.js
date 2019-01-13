@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from '../../Button';
 import style from '../../../libs/style';
 import { StringInput, InputBlock, SelectInput } from '../../input';
-// import SourceTypeEditor from '../../SourceTypeEditor';
+import SourceTypeEditor from '../../SourceTypeEditor';
 import { latest } from '@mapbox/mapbox-gl-style-spec';
 
 export default function AddSource(props) {
@@ -73,11 +73,11 @@ export default function AddSource(props) {
                     value={mode}
                 />
             </InputBlock>
-            {/* <SourceTypeEditor
+            <SourceTypeEditor
                 onChange={src => setSource(src)}
                 mode={mode}
                 source={source}
-            /> */}
+            />
             <Button
                 className='maputnik-add-source-button'
                 onClick={props.onAdd.bind(null, sourceId, source)}
