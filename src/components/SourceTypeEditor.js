@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import {
     GeoJSONSourceEditor,
     TileJSONSourceEditor,
-    TileURLSourceEditor,
+    TileURLSourceEditor
 } from './editors';
+import { InputBlock, SelectInput } from './input';
 
 export default function SourceTypeEditor(props) {
     const commonProps = {
@@ -43,7 +44,7 @@ export default function SourceTypeEditor(props) {
                             }
                             value={
                                 props.source.encoding ||
-                                latest.source_raster_dem.encoding.default
+								latest.source_raster_dem.encoding.default
                             }
                         />
                     </InputBlock>

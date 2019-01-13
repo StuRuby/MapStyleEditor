@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import SourceTypeEditor from '../../SourceTypeEditor';
+import SourceTypeEditor from '../../SourceTypeEditor';
 import Button from '../../Button';
 import { MdDelete } from 'react-icons/md';
 
@@ -38,11 +38,11 @@ export default function ActiveSourceTypeEditor(props) {
                 </Button>
             </div>
             <div className="maputnik-active-source-type-editor-content">
-                {/* <SourceTypeEditor
+                <SourceTypeEditor
                     onChange={props.onChange}
                     mode={editorMode(props.source)}
                     source={props.source}
-                /> */}
+                />
             </div>
         </div>
     );
