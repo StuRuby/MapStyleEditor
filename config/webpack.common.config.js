@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     context: __dirname,
@@ -16,16 +16,12 @@ module.exports = {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                exclude: [
-                    path.resolve(__dirname, '../node_modules')
-                ],
+                exclude: [path.resolve(__dirname, '../node_modules')],
                 use: 'babel-loader'
             },
             {
                 test: /\.css$/,
-                exclude: [
-                    path.resolve(__dirname, '../node_modules')
-                ],
+                exclude: [path.resolve(__dirname, '../node_modules')],
                 use: [
                     'style-loader',
                     {
@@ -33,19 +29,13 @@ module.exports = {
                         options: {
                             minimize: true
                         }
-                    },
+                    }
                 ]
             },
             {
                 test: /\.scss$/,
-                exclude: [
-                    path.resolve(__dirname, '../node_modules')
-                ],
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
+                exclude: [path.resolve(__dirname, '../node_modules')],
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
                 test: /\.(png|gif|jpe?g|svg|xml|json|ttf|woff|eot)$/,
@@ -62,15 +52,21 @@ module.exports = {
             {
                 test: /\.(svg|gif|jpg|png)$/,
                 use: 'file-loader?name=img/[name].[ext]'
-            },
+            }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: '../public/index.html'
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, '../assets/svg/logo-color.svg'),
+                to: path.resolve(__dirname, '../dist/logo-color.svg')
+            }
+        ])
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.json']
     }
-}
+};
