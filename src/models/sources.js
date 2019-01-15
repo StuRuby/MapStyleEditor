@@ -38,7 +38,6 @@ export default {
                         const resp = await Axios.get(url);
                         const respJson = resp.data;
                         if (!respJson.hasOwnProperty('vector_layers'))
-                            // dispatch.sources.setSources(payload);
                             return;
                         //create a new objects before dispatch to store;
                         const sources = { ...rootState.sources };

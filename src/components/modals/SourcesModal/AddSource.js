@@ -13,9 +13,9 @@ export default function AddSource(props) {
 
     function defaultSource(mode) {
         const _source = source || {
-            data: 'http://localhost:3000/geojson.json',
-            url: 'http://localhost:3000/tilejson.json',
-            tiles: ['http://localhost:3000/{x}/{y}/{z}.pbf'],
+            data: 'http://localhost:8099/data/BP.json',
+            url: 'http://localhost:8099/data/BP.json',
+            tiles: ['http://localhost:8099/data/BP/{z}/{x}/{y}.pbf'],
             minZoom: 0,
             maxZoom: 14
         };

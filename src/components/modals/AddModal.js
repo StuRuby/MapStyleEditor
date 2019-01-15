@@ -68,6 +68,7 @@ export default class AddModal extends Component {
         const { type, id, source } = this.state;
         const sources = this.getSources(type);
         const layers = this.getLayersForSource(source);
+        console.log('layers',layers);
         return (
             <Modal
                 isOpen={props.isOpen}
