@@ -4,21 +4,16 @@ import ScrollContainer from '../components/ScrollContainer';
 
 export default function AppLayout(props) {
     return (
-        <div className='maputnik-layout'>
+        <div className="maputnik-layout">
             {props.toolbar}
-            <div className='maputnik-layout-list'>
-                <ScrollContainer>
-                    {props.layerList}
-                </ScrollContainer>
+            <div className="maputnik-layout-list">
+                <ScrollContainer>{props.layerList}</ScrollContainer>
             </div>
-            {
-                props.layerEditor &&
-                <div className='maputnik-layout-drawer'>
-                    <ScrollContainer>
-                        {props.layerEditor}
-                    </ScrollContainer>
+            {props.layerEditor && (
+                <div className="maputnik-layout-drawer">
+                    <ScrollContainer>{props.layerEditor}</ScrollContainer>
                 </div>
-            }
+            )}
             {props.map}
             {/* {
                 props.bottom && <div className='maputnik-layout-bottom' >
