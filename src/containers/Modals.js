@@ -34,7 +34,7 @@ function Modals(props) {
             }
             setMapStyle(newStyle);
             //base on new mapStyle,load needed sources.
-            fetchSources(newStyle);
+            fetchSources(newStyle.sources);
         }
     };
 
@@ -92,7 +92,7 @@ const mapDispatch = ({
 }) => ({
     toggleModal: key => setModalOpen(key),
     setMapStyle: mapStyle => setMapStyle(mapStyle),
-    fetchSources: () => loadSources(),
+    fetchSources: sources => loadSources(sources),
     updateFonts: (metadata, url) => updateFonts(metadata, url),
     updateIcons: url => updateIcons(url)
 });
