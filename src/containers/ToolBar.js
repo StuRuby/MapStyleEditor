@@ -63,7 +63,7 @@ function Toolbar(props) {
                     <ToolbarSelect wdKey="nav:inspect">
                         <MdFindInPage />
                         <IconText>View </IconText>
-                        <select>
+                        <select onChange={e => props.setMapState(e.target.value)} >
                             {MAP_VIEW_MODES.map(item => {
                                 return (
                                     <option key={item.id} value={item.id}>
@@ -80,11 +80,13 @@ function Toolbar(props) {
 }
 
 Toolbar.propTypes = {
-    toggleModalOpen: PropTypes.func
+    toggleModalOpen: PropTypes.func,
+    setMapState: PropTypes.func,
 };
 
-const mapDispatch = ({ modalsOpen: { setModalOpen } }) => ({
-    toggleModalOpen: key => setModalOpen(key)
+const mapDispatch = ({ modalsOpen: { setModalOpen }, mapState: { setMapState } }) => ({
+    toggleModalOpen: key => setModalOpen(key),
+    setMapState: (mode) => setMapState(mode),
 });
 
 export default connect(

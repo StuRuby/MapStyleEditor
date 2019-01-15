@@ -26,7 +26,7 @@ function renderPropertyPopup(features) {
     return node.innerHTML;
 }
 
-function buildInspectStyle(originalStyle, coloredLayers, highlightedLayer) {
+function buildInspectStyle(originalMapStyle, coloredLayers, highlightedLayer) {
     const backgroundLayer = {
         id: 'background',
         type: 'background',
