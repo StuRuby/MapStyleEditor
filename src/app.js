@@ -1,16 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AppLayout from './layout/AppLayout';
 import ToolsBar from './containers/ToolBar';
 import Modals from './containers/Modals';
 import LayerList from './containers/LayerList';
 import LayerEditor from './containers/LayerEditor';
 import Map from './containers/Map';
+import { connect } from 'react-redux';
 
-function App() {
+function App(props) {
     const toolbar = <ToolsBar />;
     const modals = <Modals />;
     const layerList = <LayerList />;
-    const layerEditor = <LayerEditor />;
+    const layerEditor = props.showLayerEditor ? <LayerEditor /> : null;
     const map = <Map />;
     return (
         <AppLayout
@@ -23,4 +25,15 @@ function App() {
     );
 }
 
-export default App;
+App.propTypes = {
+    showLayerEditor: PropTypes.bool.isRequired,
+};
+
+const mapState = ({ selectedLayerIndex }) => ({
+    showLayerEditor: selectedLayerIndex != null,
+});
+
+export default connect(
+    mapState,
+    null
+)(App);

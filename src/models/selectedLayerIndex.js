@@ -1,7 +1,7 @@
 import style from '../libs/style';
 
 export default {
-    state: 0,
+    state: null,
     reducers: {
         setLayerSelect(state, layers, idx) {
             const _idx = style.indexOfLayer(layers, idx);
