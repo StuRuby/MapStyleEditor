@@ -15,7 +15,9 @@ export default {
         async loadSources(payload, rootState) {
             const sourcelist = { ...rootState.sources };
 
-            for (let [key, value] of Object.entries(payload)) {
+            for (let [key, value] of Object.entries(
+                rootState.mapStyle.sources
+            )) {
                 if (sourcelist.hasOwnProperty(key)) continue;
                 sourcelist[key] = {
                     type: value.type,
@@ -37,16 +39,15 @@ export default {
                     try {
                         const resp = await Axios.get(url);
                         const respJson = resp.data;
-                        if (!respJson.hasOwnProperty('vector_layers'))
-                            return;
+                        if (!respJson.hasOwnProperty('vector_layers')) return;
                         //create a new objects before dispatch to store;
-                        const sources = { ...rootState.sources };
+                        // const sources = { ...rootState.sources };
                         for (let layer of respJson.vector_layers) {
-                            sources[key] = sources[key] || {};
-                            sources[key].layers = sources[key].layers || [];
-                            sources[key].layers.push(layer.id);
+                            // sources[key] = sources[key] || {};
+                            // sources[key].layers = sources[key].layers || [];
+                            sourcelist[key].layers.push(layer.id);
                         }
-                        dispatch.sources.setSources(sources);
+                        dispatch.sources.setSources(sourcelist);
                     } catch (err) {
                         console.error(
                             `Failed to process sources for ${url}`,

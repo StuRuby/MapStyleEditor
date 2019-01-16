@@ -34,7 +34,7 @@ function Modals(props) {
             }
             setMapStyle(newStyle);
             //base on new mapStyle,load needed sources.
-            fetchSources(newStyle.sources);
+            fetchSources();
         }
     };
 
