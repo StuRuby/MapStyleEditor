@@ -4,7 +4,7 @@ import tokens from '../mock/tokens';
 const emptyStyle = ensureStyleValidity({
     version: 8,
     sources: {},
-    layers: []
+    layers: [],
 });
 
 

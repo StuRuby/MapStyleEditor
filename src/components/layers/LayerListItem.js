@@ -69,6 +69,9 @@ LayerListItem.propTypes = {
     onLayerVisibilityToggle: PropTypes.func,
 };
 
-
+LayerListItem.defaultProps = {
+    visibility: 'visible',
+    isSelected: false,
+};
 
 export default SortableElement(props => <LayerListItem {...props} />);
