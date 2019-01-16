@@ -12,7 +12,7 @@ function App(props) {
     const toolbar = <ToolsBar />;
     const modals = <Modals />;
     const layerList = <LayerList />;
-    const layerEditor = props.showLayerEditor ? <LayerEditor /> : null;
+    const layerEditor = <LayerEditor />;
     const map = <Map />;
     return (
         <AppLayout
@@ -25,15 +25,4 @@ function App(props) {
     );
 }
 
-App.propTypes = {
-    showLayerEditor: PropTypes.bool.isRequired,
-};
-
-const mapState = ({ selectedLayerIndex }) => ({
-    showLayerEditor: selectedLayerIndex != null,
-});
-
-export default connect(
-    mapState,
-    null
-)(App);
+export default App;

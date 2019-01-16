@@ -363,6 +363,12 @@ class LayerEditor extends Component {
     }
 }
 
+function LayerEditorWrapper(props) {
+    if (props.selectedLayer == null || props.selectedLayerIndex == null)
+        return <div />;
+    return <LayerEditor {...props} />;
+}
+
 LayerEditor.propTypes = {
     layers: PropTypes.array.isRequired,
     selectedLayerIndex: PropTypes.number,
@@ -409,4 +415,4 @@ const mapDispatch = ({
 export default connect(
     mapState,
     mapDispatch
-)(LayerEditor);
+)(LayerEditorWrapper);
