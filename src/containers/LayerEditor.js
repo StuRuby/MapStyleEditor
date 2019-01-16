@@ -215,18 +215,18 @@ class LayerEditor extends Component {
                             'hillshade',
                             'heatmap'
                         ].indexOf(selectedLayer.type) < 0 && (
-                            <LayerSourceLayerBlock
-                                sourceLayerIds={sourceLayerIds}
-                                value={selectedLayer['source-layer']}
-                                onChange={value =>
-                                    this.onLayerPropertyChange(
-                                        null,
-                                        'source-layer',
-                                        value
-                                    )
-                                }
-                            />
-                        )}
+                                <LayerSourceLayerBlock
+                                    sourceLayerIds={sourceLayerIds}
+                                    value={selectedLayer['source-layer']}
+                                    onChange={value =>
+                                        this.onLayerPropertyChange(
+                                            null,
+                                            'source-layer',
+                                            value
+                                        )
+                                    }
+                                />
+                            )}
                         <MinZoomBlock
                             value={selectedLayer.minzoom}
                             onChange={value =>
@@ -337,7 +337,7 @@ class LayerEditor extends Component {
                 <header>
                     <div className="layer-header">
                         <h2 className="layer-header__title">
-							Layer:{selectedLayer.id}
+                            Layer:{selectedLayer.id}
                         </h2>
                         <div className="layer-header__info">
                             <Wrapper
@@ -394,7 +394,7 @@ const mapState = ({
     layers: mapStyle.layers,
     selectedLayerIndex,
     selectedLayer:
-		mapStyle.layers.length > 0 ? mapStyle.layers[selectedLayerIndex] : null,
+        mapStyle.layers.length > 0 ? mapStyle.layers[selectedLayerIndex] : null,
     sources,
     vectorLayers,
     spec
