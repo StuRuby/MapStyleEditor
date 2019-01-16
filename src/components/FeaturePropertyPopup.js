@@ -14,7 +14,6 @@ function renderProperties(feature) {
     return Object.keys(feature.properties)
         .map(propertyName => {
             const property = feature.properties[propertyName];
-            console.log('propertyName',propertyName);
             return (
                 <InputBlock
                     key={propertyName}

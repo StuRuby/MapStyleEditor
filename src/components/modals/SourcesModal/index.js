@@ -49,6 +49,11 @@ export default function SourcesModal(props) {
                 />
             );
         });
+
+    const addSourceHandler = (sourceId, source) => {
+        const _sources = addSource(mapStyle, sourceId, source);
+        props.onStyleChanged(_sources);
+    };
     return (
         <Modal
             isOpen={props.isOpen}
@@ -73,13 +78,7 @@ export default function SourcesModal(props) {
             <div className="maputnik-modal-section">
                 <h4>添加新数据源</h4>
                 <p>添加新的数据源</p>
-                <AddSource
-                    onAdd={(sourceId, source) =>
-                        props.onStyleChanged(
-                            addSource(mapStyle, sourceId, source)
-                        )
-                    }
-                />
+                <AddSource onAdd={addSourceHandler} />
             </div>
         </Modal>
     );

@@ -52,8 +52,7 @@ export default {
             const layer = { ...changedLayers[idx] };
             const changedLayout = 'layout' in layer ? { ...layer.layout } : {};
             changedLayout.visibility =
-                changedLayout.visibility === 'none' ? 'visible' : 'none';
-
+				changedLayout.visibility === 'none' ? 'visible' : 'none';
             layer.layout = changedLayout;
             changedLayers[idx] = layer;
             return {

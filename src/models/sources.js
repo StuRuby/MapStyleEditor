@@ -11,7 +11,6 @@ export default {
         }
     },
     effects: dispatch => ({
-        // async loadSources(state, mapStyle) {
         async loadSources(payload, rootState) {
             const sourcelist = { ...rootState.sources };
 
@@ -25,8 +24,8 @@ export default {
                 };
                 if (
                     !rootState.sources.hasOwnProperty(key) &&
-                    value.type === 'vector' &&
-                    value.hasOwnProperty('url')
+					value.type === 'vector' &&
+					value.hasOwnProperty('url')
                 ) {
                     let url = value.url;
                     try {
@@ -40,11 +39,7 @@ export default {
                         const resp = await Axios.get(url);
                         const respJson = resp.data;
                         if (!respJson.hasOwnProperty('vector_layers')) return;
-                        //create a new objects before dispatch to store;
-                        // const sources = { ...rootState.sources };
                         for (let layer of respJson.vector_layers) {
-                            // sources[key] = sources[key] || {};
-                            // sources[key].layers = sources[key].layers || [];
                             sourcelist[key].layers.push(layer.id);
                         }
                         dispatch.sources.setSources(sourcelist);
