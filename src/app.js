@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppLayout from './layout/AppLayout';
+import AppLayout from './layout/appLayout';
 import ToolsBar from './containers/ToolBar';
 import Modals from './containers/Modals';
 import LayerList from './containers/LayerList';
