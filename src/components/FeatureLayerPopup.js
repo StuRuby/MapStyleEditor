@@ -28,7 +28,7 @@ export default function FeatureLayerPopup(props) {
     const iconStyle = {
         width: 14,
         height: 14,
-        paddingRight: 3
+        padding: 3
     };
     const items = Object.keys(sources).map(vectorLayerId => {
         const layers = sources[vectorLayerId].map((feature, idx) =>

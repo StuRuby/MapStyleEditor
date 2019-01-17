@@ -7,7 +7,8 @@ import {
     SourcesModal,
     ExportModal,
     SettingModal,
-    ShortcutsModal
+    ShortcutsModal,
+    OpenModal,
 } from '../components/modals';
 
 function Modals(props) {
@@ -40,6 +41,11 @@ function Modals(props) {
 
     return (
         <div>
+            <OpenModal
+                isOpen={modalsOpen['open']}
+                onStyleOpen={onStyleChanged}
+                onOpenToggle={toggleModal.bind(null, 'open')}
+            />
             <SourcesModal
                 mapStyle={mapStyle}
                 onStyleChanged={onStyleChanged}
