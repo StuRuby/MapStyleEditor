@@ -1,7 +1,7 @@
 export { default as Collapse } from './Collapse';
 export { default as Collapser } from './Collapser';
 export { default as CommentBlock } from './CommentBlock';
-export { default as JSONEditor } from './JSONEditor';
+export { default as JSONEditor } from './JsonEditor';
 export { default as LayerEditorGroup } from './LayerEditorGroup';
 export { default as LayerIdBlock } from './LayerIdBlock';
 export { default as LayerListGroup } from './LayerListGroup';
