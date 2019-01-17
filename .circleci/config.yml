@@ -19,6 +19,8 @@ jobs:
     steps:
       - checkout
 
+      - setup_remote_docker
+
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -38,3 +40,9 @@ jobs:
 
       # run build!
       - run : npm run build
+
+      - deploy:
+          command : |
+            git config --global user.email 937931249@qq.com
+            git config --global user.name sturuby
+
