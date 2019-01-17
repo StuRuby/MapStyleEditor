@@ -6,3 +6,4 @@ export { default as ExportModal } from './ExportModal';
 export { default as LoadingModal } from './LoadingModal';
 export { default as SettingModal } from './SettingModal';
 export { default as ShortcutsModal } from './ShortcutsModal';
+export { default as OpenModal } from './OpenModal';
