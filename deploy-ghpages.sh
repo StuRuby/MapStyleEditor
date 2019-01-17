@@ -11,7 +11,7 @@ if [ $CIRCLE_BRANCH == $SOURCE_BRANCH ]; then
 
     npm run build
 
-    cp -a build/. out/.
+    cp -a dist/. out/.
 
     mkdir -p out/.circleci && cp -a .circleci/. out/.circleci/.
     cd out
