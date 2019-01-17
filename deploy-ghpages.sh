@@ -1,6 +1,6 @@
 if [ $CIRCLE_BRANCH == $SOURCE_BRANCH ]; then
-    git config --global user.email $GH_EMAIL
-    git config --global user.name $GH_NAME
+    git config --global user.email '937931249@qq.com'
+    git config --global user.name 'StuRuby'
 
     git clone $CIRCLE_REPOSITORY_URL out
 
