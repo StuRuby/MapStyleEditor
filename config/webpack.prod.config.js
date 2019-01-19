@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const commonWebpackPlugin = require('./webpack.common.config');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const progressBarWebpackPlugin = require('progress-bar-webpack-plugin');
-
+const Visualizer = require('webpack-visualizer-plugin');
 
 const cleanOptions = {
     root: path.resolve(__dirname, '../dist'),
@@ -21,6 +21,9 @@ module.exports = merge(commonWebpackPlugin, {
             }
         }),
         new cleanWebpackPlugin(['*'], cleanOptions),
-        new progressBarWebpackPlugin()
+        new progressBarWebpackPlugin(),
+        new Visualizer({
+            filename: './statistics.html'
+        })
     ]
 });
