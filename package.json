@@ -61,6 +61,7 @@
     "classnames": "^2.2.6",
     "codemirror": "^5.42.0",
     "color": "^3.1.0",
+    "compression-webpack-plugin": "^2.0.0",
     "file-saver": "^2.0.0",
     "immutable": "^4.0.0-rc.12",
     "jsonlint": "github:josdejong/jsonlint#85a19d7",
