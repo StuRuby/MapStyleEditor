@@ -1,13 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     context: __dirname,
-    entry: '../src/index.js',
+    entry: {
+        index: '../src/index.js',
+    },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: 'kmap-style-editor-[name].js'
+        filename: 'js/editor-[name].js'
     },
     node: {
         fs: 'empty'
@@ -64,9 +67,33 @@ module.exports = {
                 from: path.resolve(__dirname, '../assets/svg/logo-color.svg'),
                 to: path.resolve(__dirname, '../dist/logo-color.svg')
             }
-        ])
+        ]),
+        new webpack.ProvidePlugin({
+            ReactDOM: 'react-dom',
+            MapboxGl: 'mapbox-gl',
+        }),
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.json']
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    chunks: 'initial',
+                    minChunks: 2,
+                    maxInitialRequests: 5,
+                    minSize: 0
+                },
+                vendor: {
+                    test: /node_modules/,
+                    chunks: 'initial',
+                    name: 'vendor',
+                    priority: 10,
+                    enforce: true
+                }
+            }
+        },
+        runtimeChunk:true
     }
 };

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import autobind from 'react-autobind';
-import MapboxGl from 'mapbox-gl';
+// import MapboxGl from 'mapbox-gl';
 import MapboxInspect from 'mapbox-gl-inspect';
 import ZoomControl from '../libs/zoomControl';
 import Color from 'color';
