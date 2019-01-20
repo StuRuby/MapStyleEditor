@@ -1,5 +1,4 @@
 import { normalizeSourceURL } from '../libs/normalize';
-// import MapboxGl from 'mapbox-gl';
 import Axios from '../utils/http';
 import isequal from 'lodash.isequal';
 

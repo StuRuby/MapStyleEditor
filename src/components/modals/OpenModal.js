@@ -71,6 +71,7 @@ export default function OpenModal(props) {
                 return;
             }
             mapStyle = style.ensureStyleValidity(mapStyle);
+            props.onStyleOpen(mapStyle);
             props.onOpenToggle();
         };
         reader.onerror = e => console.error('error', e.target);
@@ -89,7 +90,7 @@ export default function OpenModal(props) {
                     <FileReaderInput onChange={onUpload} tabIndex="-1">
                         <Button className="maputnik-upload-button">
                             <MdFileUpload />
-							上传
+                            上传
                         </Button>
                     </FileReaderInput>
                 </section>
