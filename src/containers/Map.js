@@ -133,6 +133,7 @@ class Map extends Component {
                         />,
                         mountNode
                     );
+                    return mountNode;
                 }
             }
         });
