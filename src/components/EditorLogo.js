@@ -12,7 +12,7 @@ export default function EditorLogo() {
                 <img src='./logo-color.svg' alt='KMap Editor' />
                 <h1>
                     <span className='maputnik-toolbar-name' >KMapEditor</span>
-                    <span className='maputnik-toolbar-version' >v0.2</span>
+                    <span className='maputnik-toolbar-version' >v0.1</span>
                 </h1>
             </a>
         </div>
