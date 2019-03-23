@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>event-app-1012-18</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2-6-2-图标-缩放范围内的样式-" transform="translate(-352.000000, -145.000000)">
+            <g id="分组-7" transform="translate(209.000000, 0.000000)">
+                <g id="分组-8" transform="translate(131.000000, 116.000000)">
+                    <g id="event-app-1012-18" transform="translate(12.000000, 29.000000)">
+                        <g id="publicsign/red">
+                            <circle id="Oval-Copy-23" fill="#F57D7D" cx="9" cy="9" r="8.4375"></circle>
+                            <path d="M9,17.4375 C13.6599026,17.4375 17.4375,13.6599026 17.4375,9 C17.4375,4.34009742 13.6599026,0.5625 9,0.5625 C4.34009742,0.5625 0.5625,4.34009742 0.5625,9 C0.5625,13.6599026 4.34009742,17.4375 9,17.4375 Z M9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C13.9705627,0 18,4.02943725 18,9 C18,13.9705627 13.9705627,18 9,18 Z" id="Oval-Copy-23" fill="#FFFFFF" fill-rule="nonzero"></path>
+                        </g>
+                        <g id="Group-11" transform="translate(5.343750, 3.375000)" fill="#FFFFFF">
+                            <path d="M6.10718285,11.180056 C6.15135988,11.2733147 6.22364236,11.2733147 6.26780496,11.180056 L8.41413653,6.91954174 C8.45830635,6.82629568 8.43797353,6.75 8.36895729,6.75 L7.03125,6.75 L7.03125,0.220646405 C7.03125,0.0992807397 6.97477233,0 6.9057633,0 L5.4692367,0 C5.40021325,0 5.34375,0.0993060955 5.34375,0.220646405 L5.34375,6.75 L4.00603774,6.75 C3.93702871,6.75 3.91669589,6.826283 3.96085849,6.91954174 L6.10718285,11.180056 Z" id="Shape" fill-rule="nonzero" transform="translate(6.187500, 5.625000) scale(1, -1) translate(-6.187500, -5.625000) "></path>
+                            <rect id="Rectangle-61" x="0" y="0.28125" width="2.25" height="3.09375" rx="1"></rect>
+                            <rect id="Rectangle-61-Copy" x="0" y="4.21875" width="2.25" height="3.09375" rx="1"></rect>
+                            <rect id="Rectangle-61-Copy-2" x="0" y="8.15625" width="2.25" height="3.09375" rx="1"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
